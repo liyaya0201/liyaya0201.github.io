@@ -6,24 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>吃冰冰的喵酱</title>
+  <title>Kafka入门实战 | 吃冰冰的喵酱</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-    
-    <!-- <meta name="keywords" content="Java,Hadoop,HIVE,Hbase,Kafka,CDH,Spark,Flink">
-    <meta name="description" content="喜欢看新闻的程序员"> -->
-  
-  <meta name="description" content="喜欢看新闻的程序员">
-<meta property="og:type" content="website">
-<meta property="og:title" content="吃冰冰的喵酱">
-<meta property="og:url" content="http://example.com/index.html">
+  <meta name="description" content="1. Apache Kafka 官网链接首页的三句话要理解，重点是第一句  发布&amp;订阅：类似于一个消息系统，读写流式的数据。  处理：编写可扩展的流处理应用程序，用于实时事件响应的场景。  存储：安全的将流式的数据存储在一个分布式，有副本备份，容错的集群。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kafka入门实战">
+<meta property="og:url" content="http://example.com/2018/06/01/Kafka%E5%85%A5%E9%97%A8%E5%AE%9E%E6%88%98/index.html">
 <meta property="og:site_name" content="吃冰冰的喵酱">
-<meta property="og:description" content="喜欢看新闻的程序员">
+<meta property="og:description" content="1. Apache Kafka 官网链接首页的三句话要理解，重点是第一句  发布&amp;订阅：类似于一个消息系统，读写流式的数据。  处理：编写可扩展的流处理应用程序，用于实时事件响应的场景。  存储：安全的将流式的数据存储在一个分布式，有副本备份，容错的集群。">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200328173936166.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpeWF5YTAyMDE=,size_16,color_FFFFFF,t_70">
+<meta property="article:published_time" content="2018-06-01T13:16:49.000Z">
+<meta property="article:modified_time" content="2021-03-05T09:36:03.589Z">
 <meta property="article:author" content="wuji">
-<meta property="article:tag" content="Java,Hadoop,HIVE,Hbase,Kafka,CDH,Spark,Flink">
+<meta property="article:tag" content="大数据">
+<meta property="article:tag" content="Kafka">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200328173936166.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpeWF5YTAyMDE=,size_16,color_FFFFFF,t_70">
   
     <link rel="alternative" href="/atom.xml" title="吃冰冰的喵酱" type="application/atom+xml">
   
@@ -224,102 +225,25 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-
-  
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-Kafka入门实战" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
   
   
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2021/03/04/hello-world/" target="_blank">Hello World</a>
-  
+    <h1 class="article-title" itemprop="name">
+      Kafka入门实战
     </h1>
   
 
 
   
   
-<a href="/2021/03/04/hello-world/" class="archive-article-date">
-        <time datetime="2021-03-04T14:05:53.458Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-04</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-    
-    <a class="article-more-a" href="/2021/03/04/hello-world/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2021/03/04/hello-world/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
         
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
+        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
 
-
-
-
-  
-    <article id="post-Kafka入门实战" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2018/06/01/Kafka%E5%85%A5%E9%97%A8%E5%AE%9E%E6%88%98/" target="_blank">Kafka入门实战</a>
-  
-    </h1>
-  
-
-
-  
-  
 <a href="/2018/06/01/Kafka%E5%85%A5%E9%97%A8%E5%AE%9E%E6%88%98/" class="archive-article-date">
         <time datetime="2018-06-01T13:16:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-01</time>
 </a>
@@ -327,6 +251,27 @@
   
   
     
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">2.3k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">10分</span>
+    </span>
+  </span>
+</div>
+
 
   
   </header>
@@ -341,13 +286,287 @@
 <li><p>处理：编写可扩展的流处理应用程序，用于实时事件响应的场景。</p>
 </li>
 <li><p>存储：安全的将流式的数据存储在一个分布式，有副本备份，容错的集群。</p>
-    
-    <a class="article-more-a" href="/2018/06/01/Kafka%E5%85%A5%E9%97%A8%E5%AE%9E%E6%88%98/#more">more >></a>
-    
-    
+<span id="more"></span></li>
+</ul>
+<p>简单一点讲：消息中间件<br>经典的架构：Flume(生产者) –&gt; Kafka –&gt; SS/SSS(消费者)<br>比如：<br>     log       –&gt; flume<br>     mysql  –&gt; maxwell<br>     oracle  –&gt; ogg</p>
+<p>Kafka用于构建实时的数据管道和流式的app。它可以水平扩展，高可用，速度快，并且已经运行在数千家公司的生产环境。</p>
+<h3 id="2-CDH-Kafka（CDK，需要自定义部署）"><a href="#2-CDH-Kafka（CDK，需要自定义部署）" class="headerlink" title="2. CDH Kafka（CDK，需要自定义部署）"></a>2. CDH Kafka（CDK，需要自定义部署）</h3><hr>
+<p><a target="_blank" rel="noopener" href="https://docs.cloudera.com/documentation/kafka/4-1-x/topics/kafka_packaging.html">官网链接</a><br>现在最新版本：2.2.1-kafka4.1.0+14<br>base_version + cloudera_version + patch_level<br>2.2.1(Apache Kafka版本) + kafka4.1.0(CDK版本) + 14(打补丁次数)<br><strong>版本的选择是要重视的</strong></p>
+<p>一旦CDH版本选定，对应的ZooKeeper版本也就确定，而Kafka的元数据存储在ZooKeeper中<br>Kafka版本选择建议：使用最新的CDK（最新的版本将之前版本存在的issue修复了）</p>
+<p>CDK libs里面的 kafka_2.11-2.2.1-kafka-4.1.0.jar 解释<br>2.11：Scala 版本<br>2.2.1：Apache Kafka版本<br>4.1.0：CDK版本</p>
+<p><strong>故障案例</strong><br>CDH集群中的其他组件（比如Spark）有可能会用到 kafka-clients-2.2.1-kafka-4.1.0.jar 这个jar包<br>如果其他组件提供的 kafka-clients 的jar包与 Kafka 中的不一致，尽可能换成一致，将生产环境的Kafka中的这个jar包拷贝过去<br>不然有可能交互的时候可能会出现问题：Class not found：xxx.xxx.xxx jar</p>
+<p>抛出Class not found 的原因</p>
+<ul>
+<li>存在多版本的jar包：把低版本换成高版本</li>
+<li>缺该Class的jar包</li>
+</ul>
+<h3 id="3-部署"><a href="#3-部署" class="headerlink" title="3. 部署"></a>3. 部署</h3><hr>
+<h4 id="3-1-Kafka的数据存储"><a href="#3-1-Kafka的数据存储" class="headerlink" title="3.1 Kafka的数据存储"></a>3.1 Kafka的数据存储</h4><p>   kafka的数据目录存放在两个地方<br>   a. metadata –&gt; ZooKeeper<br>   b. log files –&gt; 配置文件server.properties中log.dirs的配置路径，当前机器的Linux磁盘上<br>   所以如果要彻底删除kafka<br>   先根据进程名一次杀死所有Kafka进程：kill -9 $(pgrep -f kafka)</p>
+<ol>
+<li>删除安装目录</li>
+<li>删除log files指定的目录</li>
+<li>删除metadata：zkCli.sh进入zookeeper命令行，删除zk的/kafka目录  rmr /kafka（在配置文件中指定的目录）</li>
+</ol>
+<h4 id="3-2-修改配置文件"><a href="#3-2-修改配置文件" class="headerlink" title="3.2 修改配置文件"></a>3.2 修改配置文件</h4><pre><code>集群部署，三台节点，如果多台，broker.id往上加
+[hadoop@spark001 config]$ vim server.properties
+broker.id=0
+host.name=spark001
+port=9092
+log.dirs=/home/hadoop/log/kafka-logs
+zookeeper.connect=spark001:2181,spark002:2181,spark003:2181/kafka
+
+[hadoop@spark002 config]$ vim server.properties
+broker.id=1
+host.name=spark002
+port=9092
+log.dirs=/home/hadoop/log/kafka-logs
+zookeeper.connect=spark001:2181,spark002:2181,spark003:2181/kafka
+
+[hadoop@spark003 config]$ vim server.properties
+broker.id=2
+host.name=spark003
+port=9092
+log.dirs=/home/hadoop/log/kafka-logs
+zookeeper.connect=spark001:2181,spark002:2181,spark003:2181/kafka
+</code></pre>
+<p>说明：<br>    zookeeper.connect为什么要这样配置?<br>    如果不加 /kafka，删除的时候不好删，加上之后方便维护管理</p>
+<pre><code># 启动命令，进入kafka目录下
+bin/kafka-server-start.sh  -daemon ../config/server.properties
+</code></pre>
+<p>启动后可以查看日志，检验是否启动成功</p>
+<pre><code>tail -200f server.log
+INFO [KafkaServer id=0] started (kafka.server.KafkaServer)
+</code></pre>
+<p>启动之后的进程名是Kafka，但官方给的叫法是broker。</p>
+<h3 id="4-基础概念"><a href="#4-基础概念" class="headerlink" title="4. 基础概念"></a>4. 基础概念</h3><hr>
+<ul>
+<li>producer：生产者。比如Flume、Maxwell都可以作为生产者。</li>
+<li>consumer：消费者。比如SS/SSS/Flink 都可以作为消费者。</li>
+<li>broker：消息处理节点。</li>
+<li>topic：就是数据主题，是数据记录发布的地方，可以用来区分业务系统。</li>
+<li>partition：topic物理上的分组，一个topic可以分为多个partition，<br>每个partition是一个有序的队列，其实就是一个文件夹/目录而已。<br>partition命名规则为topic名称-有序序号，比如wujidata-0，wujidata-1，wujidata-2。</li>
+<li>replication-factor：副本数，就是一个分区会复制几份，和HDFS的block的副本数，设计思想一致，为了高容错。</li>
+</ul>
+<h3 id="5-常用命令"><a href="#5-常用命令" class="headerlink" title="5. 常用命令"></a>5. 常用命令</h3><hr>
+<ul>
+<li><p>创建topic。如能成功创建topic则表示集群安装成功，也可以用jps命令查看kafka进程是否存在。</p>
+<pre><code>bin/kafka-topics.sh \
+--create \
+--zookeeper spark001:2181,spark002:2181,spark003:2181/kafka \
+--replication-factor 3 \
+--partitions 3 \
+--topic wujidata
+</code></pre>
+</li>
+<li><p>通过list命令查看创建的topic列表</p>
+<pre><code>bin/kafka-topics.sh \
+--list \
+--zookeeper spark001:2181,spark002:2181,spark003:2181/kafka
+</code></pre>
+</li>
+<li><p>通过describe查看创建的topic信息</p>
+<pre><code>bin/kafka-topics.sh \
+--describe \
+--zookeeper spark001:2181,spark002:2181,spark003:2181/kafka \
+--topic wujidata
+  
+Topic:wujidata    PartitionCount:3    ReplicationFactor:3    Configs:
+    Topic: wujidata    Partition: 0    Leader: 1    Replicas: 1,0,2    Isr: 1,0,2
+    Topic: wujidata    Partition: 1    Leader: 2    Replicas: 2,1,0    Isr: 2,1,0
+    Topic: wujidata    Partition: 2    Leader: 0    Replicas: 0,2,1    Isr: 0,2,1
+</code></pre>
+<p>  第一行列出了这个topic的总体情况，如topic名称，分区数量，副本数量等。<br>  第二行开始，每一行列出了一个分区的信息，如它是第几个分区，这个分区的leader是哪个broker id，<br>  副本位于哪些broker id，有哪些副本处于同步状态</p>
+<p>  说明：Leader、Replicas、Isr中的0 1 2 代表是broker id<br>  Partition：分区<br>  Leader：该分区的负责对外的读写的节点（broker id）<br>  例如：Partition: 0 有三个副本，哪一个对外提供读和写呢？我们可以从Leader这个值看出来</p>
+<p>  Replicas：复制分区的节点的列表（broker id）<br>  Isr：”in-sync” replicas，当前活跃的副本列表（是一个子集），并且有可能成为Leader。</p>
+</li>
+<li><p>删除topic</p>
+<pre><code>bin/kafka-topics.sh \
+--delete \
+--zookeeper spark001:2181,spark002:2181,spark003:2181/kafka \
+--topic wujidata
+</code></pre>
+<p> 假如删除不干净：1. linux磁盘文件夹 2. zk的/kafka的<br> ls /kafka/brokers/topics<br> ls /kafka/config/topics<br> 默认delete.topic.enable=true，执行删除命令后，无需关心。</p>
+<p> 注意事项：</p>
+<ol>
+<li><p>生产上命名不要有标点符号的字符，就英文，可以带数字，默认小写；</p>
+</li>
+<li><p>假如已经在运行的kafka只有1个topic，你可以删除，0风险；</p>
+</li>
+<li><p>假如已经在运行的kafka有多个topic，忍，风险可能存在；</p>
+</li>
+<li><p>千万不要手贱或者强迫症，看topic名称不舒服，去删除topic，删除需谨慎！</p>
+</li>
+<li><p>删除不可逆，细心操作删除命令！</p>
+<p> Notable changes in 1.0.0:<br> Topic deletion is now enabled by default, since the functionality is now stable.<br> Users who wish to to retain the previous behavior should set the broker config delete.topic.enable to false.<br> Keep in mind that topic deletion removes data and the operation is not reversible<br> (i.e. there is no “undelete” operation)</p>
+</li>
+</ol>
+</li>
+<li><p>修改topic</p>
+<pre><code>使用--alert原则上可以修改任何配置，以下列出了一些常用的修改选项：
+bin/kafka-topics.sh \
+--create \
+--zookeeper spark001:2181,spark002:2181,spark003:2181/kafka \
+--replication-factor 1 \
+--partitions 1 \
+--topic test
+
+改变分区数量为3
+bin/kafka-topics.sh \
+--alter \
+--zookeeper spark001:2181,spark002:2181,spark003:2181/kafka \
+--topic test 
+--partitions 3
+  
+查看
+bin/kafka-topics.sh --describe \
+--zookeeper spark001:2181,spark002:2181,spark003:2181/kafka \
+--topic test
+Topic:test    PartitionCount:3    ReplicationFactor:1    Configs:
+    Topic: test    Partition: 0    Leader: 1    Replicas: 1    Isr: 1
+    Topic: test    Partition: 1    Leader: 2    Replicas: 2    Isr: 2
+    Topic: test    Partition: 2    Leader: 0    Replicas: 0    Isr: 0
+</code></pre>
+</li>
+<li><p>自动迁移数据到新的节点<br><a target="_blank" rel="noopener" href="http://kafka.apache.org/22/documentation.html#basic_ops_automigrate">相关链接</a></p>
+<p> kafka集群不够的时候或者替换kafka的节点，应该怎么办？<br> 转移kafka数据到新的节点<br> kafka-reassign-partitions.sh 这个脚本<br>   a. 生成json文件<br>   b. 根据json文件移动，重新分配<br>   c. 校验</p>
+</li>
+</ul>
+<h3 id="6-console案例"><a href="#6-console案例" class="headerlink" title="6. console案例"></a>6. console案例</h3><hr>
+<h4 id="6-1-创建topic"><a href="#6-1-创建topic" class="headerlink" title="6.1 创建topic"></a>6.1 创建topic</h4><pre><code>bin/kafka-topics.sh \
+--create \
+--zookeeper spark001:2181,spark002:2181,spark003:2181/kafka \
+--replication-factor 3 \
+--partitions 3 \
+--topic wc-test
+</code></pre>
+<h4 id="6-2-生产者"><a href="#6-2-生产者" class="headerlink" title="6.2 生产者"></a>6.2 生产者</h4><pre><code>bin/kafka-console-producer.sh \
+--broker-list spark001:9092,spark002:9092,spark003:9092 \
+--topic wc-test
+&gt;www.ruozedata.com
+&gt;1
+&gt;2
+&gt;3
+&gt;4
+&gt;5
+&gt;6
+&gt;7
+&gt;8
+&gt;9
+</code></pre>
+<h4 id="6-3-消费者"><a href="#6-3-消费者" class="headerlink" title="6.3 消费者"></a>6.3 消费者</h4><pre><code>bin/kafka-console-consumer.sh \
+--bootstrap-server spark001:9092,spark002:9092,spark003:9092 \
+--topic wc-test \
+--from-beginning
+www.ruozedata.com
+1
+2
+3
+4
+5
+6
+7
+8
+9
+</code></pre>
+<h4 id="6-4-假如consumer会话中断，重新打开，从头开始消费数据，数据乱序现象，思考如何保障全局有序呢？"><a href="#6-4-假如consumer会话中断，重新打开，从头开始消费数据，数据乱序现象，思考如何保障全局有序呢？" class="headerlink" title="6.4 假如consumer会话中断，重新打开，从头开始消费数据，数据乱序现象，思考如何保障全局有序呢？"></a>6.4 假如consumer会话中断，重新打开，从头开始消费数据，数据乱序现象，思考如何保障全局有序呢？</h4><pre><code>输出结果，全局乱序，分区内有序
+2
+5
+8
+www.ruozedata.com
+3
+6
+9
+1
+4
+7
+</code></pre>
+<h4 id="6-5-假如删除wc-test-topic"><a href="#6-5-假如删除wc-test-topic" class="headerlink" title="6.5 假如删除wc-test topic"></a>6.5 假如删除wc-test topic</h4><p>磁盘的topic的分区文件夹名称，有delete标识</p>
+<pre><code>[hadoop@spark001 kafka_2.11-2.2.0]$ bin/kafka-topics.sh \
+&gt; --delete \
+&gt; --zookeeper spark001:2181,spark002:2181,spark003:2181/kafka \
+&gt; --topic wc-test
+Topic wc-test is marked for deletion.
+Note: This will have no impact if delete.topic.enable is not set to true.
+
+[hadoop@spark001 kafka-logs]$  
+drwxrwxr-x 2 hadoop hadoop 141 Mar 29 14:38 wc-test-0.9f5446c1f9c44dae879f63cac603c7a7-delete
+drwxrwxr-x 2 hadoop hadoop 141 Mar 29 14:36 wc-test-1.26cf88d1323343aabdb804d02d967011-delete
+drwxrwxr-x 2 hadoop hadoop 141 Mar 29 14:38 wc-test-2.513e1d4e7b6b4245922e89ed81ef7e47-delete
+
+第一次尝试消费，失败，无法获取metadata
+[hadoop@spark001 kafka_2.11-2.2.0]$ bin/kafka-console-consumer.sh \
+&gt; --bootstrap-server spark001:9092,spark002:9092,spark003:9092 \
+&gt; --topic wc-test \
+&gt; --from-beginning
+WARN [Consumer clientId=consumer-1, groupId=console-consumer-18519] 
+Error while fetching metadata with correlation id 4 : &#123;wc_test=LEADER_NOT_AVAILABLE&#125; 
+(org.apache.kafka.clients.NetworkClient)
+
+有时再次创建这个topic无法创建成功，这是因为zk的元数据没有删除，还有wc-test的信息
+[hadoop@spark001 kafka_2.11-2.2.0]$ bin/kafka-topics.sh \
+&gt; --create \
+&gt; --zookeeper spark001:2181,spark002:2181,spark003:2181/kafka \
+&gt; --replication-factor 3 \
+&gt; --partitions 3 \
+&gt; --topic wc-test
+Error while executing topic command : Topic &#39;wc-test&#39; already exists.
+ERROR org.apache.kafka.common.errors.TopicExistsException: Topic &#39;wc-test&#39; already exists.
+(kafka.admin.TopicCommand$)
+
+删除zk中kafka的信息，再次创建即可成功
+[zk: localhost:2181(CONNECTED) 4] rmr /kafka/brokers/topics/wc-test
+
+但有时创建却可以直接成功，有点奇怪，后续要再继续研究一下。
+
+那么成功的topic的，必然没有之前一模一样名称的topic的旧数据。
+</code></pre>
 
     
 
+    
+    <div class="page-reward">
+      <a href="javascript:void(0);" class="page-reward-btn tooltip-top" target="_self">
+        <div class="tooltip tooltip-east">
+          <span class="tooltip-item">
+            赏
+          </span>
+          <span class="tooltip-content">
+            <span class="tooltip-text">
+              <span class="tooltip-inner">
+                <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i
+                    class="icon icon-quo-right"></i></p>
+                <div class="reward-box">
+                  
+                  
+                </div>
+              </span>
+            </span>
+          </span>
+        </div>
+      </a>
+    </div>
+    
+
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          wuji
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="http://example.com/2018/06/01/Kafka入门实战/" title="Kafka入门实战" target="_blank">http://example.com/2018/06/01/Kafka入门实战/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
     
 
   </div>
@@ -383,16 +602,80 @@
 
 
     
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2018/06/01/Kafka%E5%85%A5%E9%97%A8%E5%AE%9E%E6%88%98/">展开全文 >></a>
-    </p>
+
     
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2018/06/01/Kafka%E5%85%A5%E9%97%A8%E5%AE%9E%E6%88%98/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
 
     
     <div class="clearfix"></div>
   </div>
   </div>
 </article>
+
+
+<nav id="article-nav">
+  
+    <a href="/2021/03/04/hello-world/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Hello World
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -413,8 +696,24 @@
 
 
 
-  
-  
+
+<div id="SOHUCS" sid="Kafka入门实战" ></div> 
+<script charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+    window.changyan.api.config({
+        appid: "cyvl3wKwz",
+        conf: "828bff56cbe22d4bc265d29ccf9b1c67"
+    });
+</script>
+</script>
+
+
+
+
+
+
+
+
 
 
           </div>
@@ -454,8 +753,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,

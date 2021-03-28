@@ -6,20 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://liyaya0201.github.io">
-  <title>Archives: 2020 | 吃冰冰的喵酱</title>
+  <title>记录一次生产上因Spark升级导致的程序报错：java.lang.IllegalArgumentException_ Illegal pattern component_ XXX | 吃冰冰的喵酱</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="喜欢看新闻的程序员">
-<meta property="og:type" content="website">
-<meta property="og:title" content="吃冰冰的喵酱">
-<meta property="og:url" content="https://liyaya0201.github.io/archives/2020/index.html">
+  <meta name="description" content="1. 前言前段时间因生产需要，需将 Spark2.1 版本升级到 2.4 版本。但由于升级方式存在问题：  并不是将 2.1 版本 jars 目录下的 jar 包全部替换成 2.4 版本的，只是替换了 spark 开头的 jar 包； jars 目录下存在自己放进去的一些 jar 包">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记录一次生产上因Spark升级导致的程序报错：java.lang.IllegalArgumentException_ Illegal pattern component_ XXX">
+<meta property="og:url" content="https://liyaya0201.github.io/2019/11/17/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E7%94%9F%E4%BA%A7%E4%B8%8A%E5%9B%A0Spark%E5%8D%87%E7%BA%A7%E5%AF%BC%E8%87%B4%E7%9A%84%E7%A8%8B%E5%BA%8F%E6%8A%A5%E9%94%99%EF%BC%9Ajava.lang.IllegalArgumentException_%20Illegal%20pattern%20component_%20XXX/index.html">
 <meta property="og:site_name" content="吃冰冰的喵酱">
-<meta property="og:description" content="喜欢看新闻的程序员">
+<meta property="og:description" content="1. 前言前段时间因生产需要，需将 Spark2.1 版本升级到 2.4 版本。但由于升级方式存在问题：  并不是将 2.1 版本 jars 目录下的 jar 包全部替换成 2.4 版本的，只是替换了 spark 开头的 jar 包； jars 目录下存在自己放进去的一些 jar 包">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20191118102800633.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpeWF5YTAyMDE=,size_16,color_FFFFFF,t_70">
+<meta property="article:published_time" content="2019-11-16T16:00:00.000Z">
+<meta property="article:modified_time" content="2019-11-16T16:00:00.000Z">
 <meta property="article:author" content="wuji">
-<meta property="article:tag" content="Java,Hadoop,HIVE,Hbase,Kafka,CDH,Spark,Flink">
+<meta property="article:tag" content="Spark">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20191118102800633.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpeWF5YTAyMDE=,size_16,color_FFFFFF,t_70">
   
     <link rel="alternative" href="/atom.xml" title="吃冰冰的喵酱" type="application/atom+xml">
   
@@ -268,40 +272,171 @@
           </div>
           <div id="js-content" class="content-ll">
             
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2020/02/12/SparkSQL%E8%87%AA%E5%AE%9A%E4%B9%89%E5%A4%96%E9%83%A8Text%E6%95%B0%E6%8D%AE%E6%BA%90/" class="archive-article-date">
-        <time datetime="2020-02-11T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-12</time>
-</a>
 
-        </div>
-    	 
+
+<article id="post-记录一次生产上因Spark升级导致的程序报错：java.lang.IllegalArgumentException_ Illegal pattern component_ XXX" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
   
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2020/02/12/SparkSQL%E8%87%AA%E5%AE%9A%E4%B9%89%E5%A4%96%E9%83%A8Text%E6%95%B0%E6%8D%AE%E6%BA%90/" target="_blank">SparkSQL自定义外部Text数据源</a>
   
+    <h1 class="article-title" itemprop="name">
+      记录一次生产上因Spark升级导致的程序报错：java.lang.IllegalArgumentException_ Illegal pattern component_ XXX
     </h1>
   
 
 
-        <div class="article-info info-on-right">
-          
+  
+  
+<a href="/2019/11/17/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E7%94%9F%E4%BA%A7%E4%B8%8A%E5%9B%A0Spark%E5%8D%87%E7%BA%A7%E5%AF%BC%E8%87%B4%E7%9A%84%E7%A8%8B%E5%BA%8F%E6%8A%A5%E9%94%99%EF%BC%9Ajava.lang.IllegalArgumentException_%20Illegal%20pattern%20component_%20XXX/" class="archive-article-date">
+        <time datetime="2019-11-16T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-17</time>
+</a>
+
+  
+  
+    <div align="center">
+      
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">579字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">2分</span>
+    </span>
+  </span>
+</div>
+
+
+    </div>
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+      
+      
+
+      
+
+      <h3><span id="1-前言">1. 前言</span></h3><p>前段时间因生产需要，需将 Spark2.1 版本升级到 2.4 版本。但由于升级方式存在问题：</p>
+<ul>
+<li>并不是将 2.1 版本 jars 目录下的 jar 包全部替换成 2.4 版本的，只是替换了 spark 开头的 jar 包；</li>
+<li>jars 目录下存在自己放进去的一些 jar 包</li>
+</ul>
+<span id="more"></span>
+
+<h3><span id="2-问题定位">2. 问题定位</span></h3><ul>
+<li><p>报错内容</p>
+<p><img src="https://img-blog.csdnimg.cn/20191118102800633.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpeWF5YTAyMDE=,size_16,color_FFFFFF,t_70" alt="程序报错定位"></p>
+</li>
+<li><p>解决</p>
+<ol>
+<li><p>将 jars 目录下的相关 jar 包替换为 Spark2.4 依赖的 jar 包，再次运行<br>查看日志发现报错</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">  19&#x2F;11&#x2F;17 18:20:51 WARN support.ClassPathXmlApplicationContext: Exception encountered during context initialization -          cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name  &#39;kafkaProducerServer&#39;: Unsatisfied dependency expressed through field &#39;kafkaTemplate&#39;; nested exception is org.springframework.beans.factory.CannotLoadBeanClassException: Cannot find class [org.apache.commons.pool2.impl.GenericObjectPoolConfig] for bean with name &#39;rcPoolConf&#39; defined in class path resource [conf&#x2F;bigdata-bean.xml]; nested exception is java.lang.ClassNotFoundException: org.apache.commons.pool2.impl.GenericObjectPoolConfig</span><br><span class="line">  19&#x2F;11&#x2F;17 18:20:51 ERROR yarn.ApplicationMaster: User class threw exception: java.lang.ExceptionInInitializerError</span><br><span class="line">java.lang.ExceptionInInitializerError</span><br><span class="line">       at cn.strong.leke.bigdata.app.largescreen.CoverageConditionStatApp.main(CoverageConditionStatApp.scala)</span><br><span class="line">       at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)</span><br><span class="line">       at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)</span><br><span class="line">       at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)</span><br><span class="line">       at java.lang.reflect.Method.invoke(Method.java:498)</span><br><span class="line">         at org.apache.spark.deploy.yarn.ApplicationMaster$$anon$2.run(ApplicationMaster.scala:678)</span><br><span class="line">  Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name &#39;kafkaProducerServer&#39;: Unsatisfied dependency expressed through field &#39;kafkaTemplate&#39;; nested exception is org.springframework.beans.factory.CannotLoadBeanClassException: Cannot find class [org.apache.commons.pool2.impl.GenericObjectPoolConfig] for bean with name &#39;rcPoolConf&#39; defined in class path resource [conf&#x2F;bigdata-bean.xml]; nested exception is java.lang.ClassNotFoundException: org.apache.commons.pool2.impl.GenericObjectPoolConfig </span><br></pre></td></tr></table></figure>
+
+</li>
+<li><p>定位<br><strong>nested exception is java.lang.ClassNotFoundException: org.apache.commons.pool2.impl.GenericObjectPoolConfig</strong></p>
+</li>
+<li><p>分析<br>  应该是缺少 org.apache.commons.pool2 这个依赖所致<br>  去Spark2.4 jars 目录下查看，果真没发现这个 jar 包，只有 commons-pool-1.5.4.jar<br>  解决：将 commons-pool2-2.4.2.jar 放到 jars 目录下<br>  （原因：这个包在程序里是创建 RedisPool 使用到的，Spark 所依赖的 jar 包并没有这一个）<br>  结果：再次运行，SUCCEEDED</p>
+</li>
+</ol>
+</li>
+</ul>
+<h3><span id="3-总结">3. 总结</span></h3><ul>
+<li> Spark 的 jars 目录下尽量不要放入自己的包，Spark自带什么就是什么，方便以后 Spark 的升级；</li>
+<li>自己用到的 jar 包<ol>
+<li>如果很少，可通过 –jars 传进去；</li>
+<li>如果较多，可通过 –package a:g:v 去下载，或者将所需依赖通过maven的插件打包进去，这样包会很大(所谓的胖包)；</li>
+<li>具体采用哪种看公司要求。</li>
+</ol>
+</li>
+</ul>
+
+    
+
+    
+    
+
+    
+
+    
+    
+    <p align='center' style='color:red; font-size:15px;'>
+      <span>-------------&emsp;</span>
+      <span>
+        
+          本文已结束，感谢阅读!
+        
+      <span>
+      <span>&emsp;-------------</span>
+    </p>
+    
+
+    
+      
+        
+
+
+
+<div class="declare"> 
+  <ul class="post-copyright">
+    <li>
+      <strong>本文作者: </strong>
+      wuji
+    </li>
+    <li>
+      <strong>本文链接: </strong>
+      <a href="https://liyaya0201.github.io/2019/11/17/记录一次生产上因Spark升级导致的程序报错：java.lang.IllegalArgumentException_ Illegal pattern component_ XXX/" title="记录一次生产上因Spark升级导致的程序报错：java.lang.IllegalArgumentException_ Illegal pattern component_ XXX" target="_blank">https://liyaya0201.github.io/2019/11/17/记录一次生产上因Spark升级导致的程序报错：java.lang.IllegalArgumentException_ Illegal pattern component_ XXX/</a>
+    </li>
+
+    <li>
+      <strong>发布时间: </strong>
+      2019年11月17日
+    </li>
+    <li>
+      <strong>最后更新: </strong>
+      2019年11月17日
+    </li>
+
+    
+    <li>
+      <span><strong>版权声明: </strong></span>
+      
+        <span>
+          本博客所有文章除特别声明外，均采用 
+          <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" title="知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议">CC BY-NC-SA 4.0</a>
+          进行许可。转载请注明出处！
+        </span>
+        
+      
+      
+    </li>
+    
+  </ul>
+
+</div>
+
+    
+    
+  
+
+  
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -313,143 +448,176 @@
 		</ul>
 	</div>
 
-          
+    
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/Spark//" class="article-tag-list-link color1">Spark</a>
+        			<a href="/categories/生产故障案例//" class="article-tag-list-link color2">生产故障案例</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+    
+
+    
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://liyaya0201.github.io/2019/11/17/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E7%94%9F%E4%BA%A7%E4%B8%8A%E5%9B%A0Spark%E5%8D%87%E7%BA%A7%E5%AF%BC%E8%87%B4%E7%9A%84%E7%A8%8B%E5%BA%8F%E6%8A%A5%E9%94%99%EF%BC%9Ajava.lang.IllegalArgumentException_%20Illegal%20pattern%20component_%20XXX/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2020/02/06/JDBC%E5%A4%96%E9%83%A8%E6%95%B0%E6%8D%AE%E6%BA%90%E5%AE%9E%E7%8E%B0%E6%BA%90%E7%A0%81debug/" class="archive-article-date">
-        <time datetime="2020-02-05T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-06</time>
-</a>
 
+
+<nav id="article-nav">
+  
+    <a href="/2019/12/02/Flume%E8%87%AA%E5%AE%9A%E4%B9%89Source&&Sink&&Interceptor/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Flume自定义Source&amp;&amp;Sink&amp;&amp;Interceptor
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/10/16/Kafka%E5%85%A5%E9%97%A8%E5%AE%9E%E6%88%98/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Kafka常用命令</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2020/02/06/JDBC%E5%A4%96%E9%83%A8%E6%95%B0%E6%8D%AE%E6%BA%90%E5%AE%9E%E7%8E%B0%E6%BA%90%E7%A0%81debug/" target="_blank">JDBC外部数据源实现源码debug</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Spark</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Spark//" class="article-tag-list-link color1">Spark</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">1. 前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">2. 问题定位</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">3. 总结</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2020/01/18/Yarn%E9%A1%B5%E9%9D%A2%E6%98%BE%E7%A4%BA%E5%8F%82%E6%95%B0%E8%A7%A3%E8%AF%BB/" class="archive-article-date">
-        <time datetime="2020-01-17T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-18</time>
-</a>
+        
+    </div>
+</aside>
 
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2020/01/18/Yarn%E9%A1%B5%E9%9D%A2%E6%98%BE%E7%A4%BA%E5%8F%82%E6%95%B0%E8%A7%A3%E8%AF%BB/" target="_blank">Yarn页面显示参数解读</a>
-  
-    </h1>
+
+
   
 
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Hadoop</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Yarn</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Hadoop//" class="article-tag-list-link color2">Hadoop</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
+  
 
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <section id="comments" class="comments">
+      <style>
+        .utterances{max-width: 100%;}
+      </style>
+        <script src="https://utteranc.es/client.js"
+          repo="liyaya0201/liyaya0201.github.io"
+          issue-term="title"
+          theme="github-light"
+          crossorigin="anonymous"
+          async>
+        </script>
+    </section>
+  
+
+
+
+
+
+  <script>
+  (function(){
+      var bp = document.createElement('script');
+      bp.src = '//push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+  })();
+  </script>     
 
           </div>
         </div>
@@ -477,8 +645,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,

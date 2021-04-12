@@ -102,10 +102,10 @@
 		</nav>
 		<nav style="font-size:13px; font-weight: bold;">
     	<span style="color:rgb(180,125,100)">总文章数: </span>
-    	<span style="color:rgb(99,88,25)">28</span>
+    	<span style="color:rgb(99,88,25)">46</span>
       <strong style="color:rgb(26, 73, 92)">|</strong>
       <span style="color:rgb(117, 122, 128)">总字数: </span>
-      <span class="post-count" style="color:rgb(51, 108, 122)">32.8k</span>
+      <span class="post-count" style="color:rgb(51, 108, 122)">52.1k</span>
 		</nav>
 
 		<nav class="header-smart-menu">
@@ -272,6 +272,375 @@
           </div>
           <div id="js-content" class="content-ll">
             
+
+  
+    <article id="post-Spark之监控" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2019/10/22/Spark%E4%B9%8B%E7%9B%91%E6%8E%A7/" target="_blank">Spark之监控</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2019/10/22/Spark%E4%B9%8B%E7%9B%91%E6%8E%A7/" class="archive-article-date">
+        <time datetime="2019-10-21T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-22</time>
+</a>
+
+  
+  
+    <div align="center">
+      
+
+    </div>
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+      <h2 id="Spark自带监控"><a href="#Spark自带监控" class="headerlink" title="Spark自带监控"></a>Spark自带监控</h2><p>第一种监控方式是Spark自带的，由于Spark Web UI界面只在sc的生命周期内有效，所以我们需要存储日志，在Spark sc 生命周期结束后重构UI界面。</p>
+      
+        <a class="article-more-a" href="/2019/10/22/Spark%E4%B9%8B%E7%9B%91%E6%8E%A7/#more">more >></a>
+      
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+      
+        
+
+
+
+  <div class="declare" hidden="hidden"></div>
+
+    
+    
+  
+
+  
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Spark</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Spark//" class="article-tag-list-link color1">Spark</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2019/10/22/Spark%E4%B9%8B%E7%9B%91%E6%8E%A7/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+  
+    <article id="post-Kafka入门实战" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2019/10/16/Kafka%E5%85%A5%E9%97%A8%E5%AE%9E%E6%88%98/" target="_blank">Kafka常用命令</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2019/10/16/Kafka%E5%85%A5%E9%97%A8%E5%AE%9E%E6%88%98/" class="archive-article-date">
+        <time datetime="2019-10-15T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-16</time>
+</a>
+
+  
+  
+    <div align="center">
+      
+
+    </div>
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+      <h3 id="1-Apache-Kafka"><a href="#1-Apache-Kafka" class="headerlink" title="1. Apache Kafka"></a>1. Apache Kafka</h3><p><a target="_blank" rel="noopener" href="http://kafka.apache.org/">官网链接</a><br>首页的三句话要理解，<strong>重点是第一句</strong><br><img src="https://img-blog.csdnimg.cn/20200328173936166.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpeWF5YTAyMDE=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<ul>
+<li><p>发布&amp;订阅：类似于一个消息系统，读写流式的数据。</p>
+</li>
+<li><p>处理：编写可扩展的流处理应用程序，用于实时事件响应的场景。</p>
+</li>
+<li><p>存储：安全的将流式的数据存储在一个分布式，有副本备份，容错的集群。</p>
+</li>
+</ul>
+      
+        <a class="article-more-a" href="/2019/10/16/Kafka%E5%85%A5%E9%97%A8%E5%AE%9E%E6%88%98/#more">more >></a>
+      
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+      
+        
+
+
+
+  <div class="declare" hidden="hidden"></div>
+
+    
+    
+  
+
+  
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Kafka</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Kafka//" class="article-tag-list-link color1">Kafka</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2019/10/16/Kafka%E5%85%A5%E9%97%A8%E5%AE%9E%E6%88%98/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+  
+    <article id="post-SparkCore之分组TopN" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2019/10/15/SparkCore%E4%B9%8B%E5%88%86%E7%BB%84TopN/" target="_blank">SparkCore之分组TopN</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2019/10/15/SparkCore%E4%B9%8B%E5%88%86%E7%BB%84TopN/" class="archive-article-date">
+        <time datetime="2019-10-14T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-15</time>
+</a>
+
+  
+  
+    <div align="center">
+      
+
+    </div>
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+      <p>前言：最近生产上有遇到分组求TopN的需求，记录下一路逐步改善求TopN的过程</p>
+<p>在Spark Core中，分组TopN好写，但是如果想写出性能好的代码却也很难。下面通过写TopN的方式，找出问题，解决问题。</p>
+      
+        <a class="article-more-a" href="/2019/10/15/SparkCore%E4%B9%8B%E5%88%86%E7%BB%84TopN/#more">more >></a>
+      
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+      
+        
+
+
+
+  <div class="declare" hidden="hidden"></div>
+
+    
+    
+  
+
+  
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Spark</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Spark//" class="article-tag-list-link color1">Spark</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2019/10/15/SparkCore%E4%B9%8B%E5%88%86%E7%BB%84TopN/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
 
   
     <article id="post-SparkCore之排序" class="article article-type-post  article-index" itemscope itemprop="blogPost">
@@ -1002,7 +1371,7 @@
 
 
   
-    <article id="post-SparkStreaming+Kafka运行以及调优" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Spark性能优化指南" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -1010,7 +1379,7 @@
   
     <h1 itemprop="name">
 	
-	  <a class="article-title" href="/2019/05/31/SparkStreaming+Kafka%E8%BF%90%E8%A1%8C%E4%BB%A5%E5%8F%8A%E8%B0%83%E4%BC%98/" target="_blank">SparkStreaming+Kafka运行以及调优</a>
+	  <a class="article-title" href="/2019/06/12/Spark%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E6%8C%87%E5%8D%97/" target="_blank">Spark性能优化指南</a>
   
     </h1>
   
@@ -1018,8 +1387,8 @@
 
   
   
-<a href="/2019/05/31/SparkStreaming+Kafka%E8%BF%90%E8%A1%8C%E4%BB%A5%E5%8F%8A%E8%B0%83%E4%BC%98/" class="archive-article-date">
-        <time datetime="2019-05-30T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-31</time>
+<a href="/2019/06/12/Spark%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E6%8C%87%E5%8D%97/" class="archive-article-date">
+        <time datetime="2019-06-11T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-12</time>
 </a>
 
   
@@ -1033,9 +1402,11 @@
   
   <div class="article-entry" itemprop="articleBody">
     
-      <h3 id="1-SparkStreaming-Kafka提交Yarn执行"><a href="#1-SparkStreaming-Kafka提交Yarn执行" class="headerlink" title="1. SparkStreaming+Kafka提交Yarn执行"></a>1. SparkStreaming+Kafka提交Yarn执行</h3><p><strong>前言：我们将写好的 SparkStreaming 消费 kafka 的代码提交到 yarn 上运行</strong></p>
+      <p>本文主要引用了美团关于Spark性能优化的系列文章</p>
+<p>基础篇</p>
+<p>参考链接：<a target="_blank" rel="noopener" href="https://tech.meituan.com/2016/04/29/spark-tuning-basic.html">https://tech.meituan.com/2016/04/29/spark-tuning-basic.html</a></p>
       
-        <a class="article-more-a" href="/2019/05/31/SparkStreaming+Kafka%E8%BF%90%E8%A1%8C%E4%BB%A5%E5%8F%8A%E8%B0%83%E4%BC%98/#more">more >></a>
+        <a class="article-more-a" href="/2019/06/12/Spark%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E6%8C%87%E5%8D%97/#more">more >></a>
       
     
 
@@ -1091,375 +1462,7 @@
 
     
     <p class="article-more-link">
-      <a class="article-more-a" href="/2019/05/31/SparkStreaming+Kafka%E8%BF%90%E8%A1%8C%E4%BB%A5%E5%8F%8A%E8%B0%83%E4%BC%98/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-  
-    <article id="post-Hadoop中常见的压缩格式对比" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2019/05/21/Hadoop%E4%B8%AD%E5%B8%B8%E8%A7%81%E7%9A%84%E5%8E%8B%E7%BC%A9%E6%A0%BC%E5%BC%8F%E5%AF%B9%E6%AF%94/" target="_blank">Hadoop中常见的压缩格式对比</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2019/05/21/Hadoop%E4%B8%AD%E5%B8%B8%E8%A7%81%E7%9A%84%E5%8E%8B%E7%BC%A9%E6%A0%BC%E5%BC%8F%E5%AF%B9%E6%AF%94/" class="archive-article-date">
-        <time datetime="2019-05-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-21</time>
-</a>
-
-  
-  
-    <div align="center">
-      
-
-    </div>
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-      <h2 id="什么是压缩"><a href="#什么是压缩" class="headerlink" title="什么是压缩"></a>什么是压缩</h2><p>原始数据 ==压缩==&gt; 结果数据<br>结果数据 ==解压==&gt; 原始数据<br>压缩和解压肯定需要借助算法来实现</p>
-      
-        <a class="article-more-a" href="/2019/05/21/Hadoop%E4%B8%AD%E5%B8%B8%E8%A7%81%E7%9A%84%E5%8E%8B%E7%BC%A9%E6%A0%BC%E5%BC%8F%E5%AF%B9%E6%AF%94/#more">more >></a>
-      
-    
-
-    
-    
-
-    
-
-    
-    
-
-    
-      
-        
-
-
-
-  <div class="declare" hidden="hidden"></div>
-
-    
-    
-  
-
-  
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Hadoop</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Hadoop//" class="article-tag-list-link color2">Hadoop</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2019/05/21/Hadoop%E4%B8%AD%E5%B8%B8%E8%A7%81%E7%9A%84%E5%8E%8B%E7%BC%A9%E6%A0%BC%E5%BC%8F%E5%AF%B9%E6%AF%94/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-  
-    <article id="post-scala隐式转换" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2019/04/16/scala%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2/" target="_blank">Scala隐式转换</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2019/04/16/scala%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2/" class="archive-article-date">
-        <time datetime="2019-04-15T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-16</time>
-</a>
-
-  
-  
-    <div align="center">
-      
-
-    </div>
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-      <h3 id="1-隐式转换"><a href="#1-隐式转换" class="headerlink" title="1. 隐式转换"></a>1. 隐式转换</h3><ul>
-<li>目的<br> 增强（悄无声息、偷偷摸摸）</li>
-<li>分类<ul>
-<li>隐式参数<br>方法/函数的参数可以使用 implicit</li>
-<li>隐式类型转换：A ==&gt; B<br>比如：File类中原生的并没有类似于count、read方法<br>但是我们是可以通过隐式转换来增强File中并没有提供的方法<br>公式：implicit def x2y(普通的X)：牛逼的Y = new 牛逼的Y(…)</li>
-<li>隐式类</li>
-</ul>
-</li>
-</ul>
-      
-        <a class="article-more-a" href="/2019/04/16/scala%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2/#more">more >></a>
-      
-    
-
-    
-    
-
-    
-
-    
-    
-
-    
-      
-        
-
-
-
-  <div class="declare" hidden="hidden"></div>
-
-    
-    
-  
-
-  
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Scala</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Scala//" class="article-tag-list-link color1">Scala</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2019/04/16/scala%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-  
-    <article id="post-Flume架构简介" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2019/04/10/Flume%E6%9E%B6%E6%9E%84%E7%AE%80%E4%BB%8B/" target="_blank">Flume架构简介</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2019/04/10/Flume%E6%9E%B6%E6%9E%84%E7%AE%80%E4%BB%8B/" class="archive-article-date">
-        <time datetime="2019-04-09T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-10</time>
-</a>
-
-  
-  
-    <div align="center">
-      
-
-    </div>
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-      <h3 id="Flume定义"><a href="#Flume定义" class="headerlink" title="Flume定义"></a>Flume定义</h3><p>Flume是Cloudera提供的一个高可用的，高可靠的，分布式的海量日志采集、聚合和传输的服务。Flume基于流式架构，灵活简单。</p>
-      
-        <a class="article-more-a" href="/2019/04/10/Flume%E6%9E%B6%E6%9E%84%E7%AE%80%E4%BB%8B/#more">more >></a>
-      
-    
-
-    
-    
-
-    
-
-    
-    
-
-    
-      
-        
-
-
-
-  <div class="declare" hidden="hidden"></div>
-
-    
-    
-  
-
-  
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Flume</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Flume//" class="article-tag-list-link color1">Flume</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2019/04/10/Flume%E6%9E%B6%E6%9E%84%E7%AE%80%E4%BB%8B/">展开全文 >></a>
+      <a class="article-more-a" href="/2019/06/12/Spark%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E6%8C%87%E5%8D%97/">展开全文 >></a>
     </p>
     
 
@@ -1492,7 +1495,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&lt; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &gt;</a>
+      <a class="extend prev" rel="prev" href="/">&lt; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/">Next &gt;</a>
     </nav>
   
 
@@ -1602,11 +1605,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Spark</a>
+                <a href="javascript:void(0)" class="js-tag color2">Hadoop</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Hadoop</a>
+                <a href="javascript:void(0)" class="js-tag color1">Spark</a>
               </li>
              
               <li class="article-tag-list-item">

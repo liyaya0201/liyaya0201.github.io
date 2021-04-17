@@ -6,19 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://liyaya0201.github.io">
-  <title>Tag: Kafka | 吃冰冰的喵酱</title>
+  <title>Flink之State Backends | 吃冰冰的喵酱</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="喜欢看新闻的程序员">
-<meta property="og:type" content="website">
-<meta property="og:title" content="吃冰冰的喵酱">
-<meta property="og:url" content="https://liyaya0201.github.io/tags/Kafka/index.html">
+  <meta name="description" content="用 Data Stream API 编写的程序通常以各种形式保存状态：  在 Window 触发之前要么收集元素、要么聚合 转换函数可以使用 key&#x2F;value 格式的状态接口来存储状态 转换函数可以实现 CheckpointedFunction 接口，使其本地变量具有容错能力  在启动 CheckPoint 机制时，状态会随着 CheckPoint 而持久化，以防止数据丢失、保障恢复时的一致性。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flink之State Backends">
+<meta property="og:url" content="https://liyaya0201.github.io/2020/05/21/Flink%E4%B9%8BState%20Backends/index.html">
 <meta property="og:site_name" content="吃冰冰的喵酱">
-<meta property="og:description" content="喜欢看新闻的程序员">
+<meta property="og:description" content="用 Data Stream API 编写的程序通常以各种形式保存状态：  在 Window 触发之前要么收集元素、要么聚合 转换函数可以使用 key&#x2F;value 格式的状态接口来存储状态 转换函数可以实现 CheckpointedFunction 接口，使其本地变量具有容错能力  在启动 CheckPoint 机制时，状态会随着 CheckPoint 而持久化，以防止数据丢失、保障恢复时的一致性。">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-05-20T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-05-20T16:00:00.000Z">
 <meta property="article:author" content="wuji">
-<meta property="article:tag" content="Java,Hadoop,HIVE,Hbase,Kafka,CDH,Spark,Flink">
+<meta property="article:tag" content="Flink">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="吃冰冰的喵酱" type="application/atom+xml">
@@ -268,140 +270,413 @@
           </div>
           <div id="js-content" class="content-ll">
             
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2020/04/25/Kafka%E5%88%86%E5%8C%BA%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5%E5%88%86%E6%9E%90/" class="archive-article-date">
-        <time datetime="2020-04-24T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-25</time>
-</a>
 
-        </div>
-    	 
+
+<article id="post-Flink之State Backends" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
   
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2020/04/25/Kafka%E5%88%86%E5%8C%BA%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5%E5%88%86%E6%9E%90/" target="_blank">Kafka分区分配策略分析</a>
   
+    <h1 class="article-title" itemprop="name">
+      Flink之State Backends
     </h1>
   
 
 
-        <div class="article-info info-on-right">
-          
+  
+  
+<a href="/2020/05/21/Flink%E4%B9%8BState%20Backends/" class="archive-article-date">
+        <time datetime="2020-05-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-21</time>
+</a>
+
+  
+  
+    <div align="center">
+      
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">1.6k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">6分</span>
+    </span>
+  </span>
+</div>
+
+
+    </div>
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+      
+      
+
+      
+
+      <p>用 Data Stream API 编写的程序通常以各种形式保存状态：</p>
+<ul>
+<li>在 Window 触发之前要么收集元素、要么聚合</li>
+<li>转换函数可以使用 key/value 格式的状态接口来存储状态</li>
+<li>转换函数可以实现 <code>CheckpointedFunction</code> 接口，使其本地变量具有容错能力</li>
+</ul>
+<p>在启动 CheckPoint 机制时，状态会随着 CheckPoint 而持久化，以防止数据丢失、保障恢复时的一致性。 状态内部的存储格式、状态在 CheckPoint 时如何持久化以及持久化在哪里均取决于选择的 <strong>State Backend</strong>。</p>
+<span id="more"></span>
+
+<h3><span id="可用的-state-backends">可用的 State Backends</span></h3><p>Flink 内置了以下这些开箱即用的 state backends ：</p>
+<ul>
+<li><em>MemoryStateBackend</em></li>
+<li><em>FsStateBackend</em></li>
+<li><em>RocksDBStateBackend</em></li>
+</ul>
+<p>如果不设置，默认使用 MemoryStateBackend。</p>
+<h3><span id="memorystatebackend">MemoryStateBackend</span></h3><p>在 <em>MemoryStateBackend</em> 内部，数据以 Java 对象的形式存储在堆中。 Key/value 形式的状态和窗口算子持有存储着状态值、触发器的 hash table。</p>
+<p>在 CheckPoint 时，State Backend 对状态进行快照，并将快照信息作为 CheckPoint 应答消息的一部分发送给 JobManager(master)，同时 JobManager 也将快照信息存储在堆内存中。</p>
+<p>MemoryStateBackend 能配置异步快照。强烈建议使用异步快照来防止数据流阻塞，注意，异步快照默认是开启的。 用户可以在实例化 <code>MemoryStateBackend</code> 的时候，将相应布尔类型的构造参数设置为 <code>false</code> 来关闭异步快照（仅在 debug 的时候使用），例如：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">env.setStateBackend(<span class="keyword">new</span> <span class="type">MemoryStateBackend</span>(<span class="type">MAX_MEM_STATE_SIZE</span>, <span class="literal">false</span>));</span><br></pre></td></tr></table></figure>
+
+<p>MemoryStateBackend 的限制：</p>
+<ul>
+<li>默认情况下，每个独立的状态大小限制是 5 MB。在 MemoryStateBackend 的构造器中可以增加其大小</li>
+<li>无论配置的最大状态内存大小（MAX_MEM_STATE_SIZE）有多大，都不能大于 akka frame 大小（看<a target="_blank" rel="noopener" href="https://ci.apache.org/projects/flink/flink-docs-release-1.10/zh/ops/config.html">配置参数</a>）</li>
+<li>聚合后的状态必须能够放进 JobManager 的内存中</li>
+</ul>
+<p>MemoryStateBackend 适用场景：</p>
+<ul>
+<li>本地开发和调试</li>
+<li>状态很小的 Job，例如：由每次只处理一条记录的函数（Map、FlatMap、Filter 等）构成的 Job。Kafka Consumer 仅仅需要非常小的状态</li>
+</ul>
+<p>建议同时将 <a target="_blank" rel="noopener" href="https://ci.apache.org/projects/flink/flink-docs-release-1.10/zh/ops/memory/mem_setup.html#managed-memory">managed memory</a> 设为0，以保证将最大限度的内存分配给 JVM 上的用户代码。</p>
+<h3><span id="fsstatebackend">FsStateBackend</span></h3><p><em>FsStateBackend</em> 需要配置一个文件系统的 URL（类型、地址、路径），例如：“hdfs://namenode:40010/flink/checkpoints” 或 “file:///data/flink/checkpoints”。</p>
+<p>FsStateBackend 将正在运行中的状态数据保存在 TaskManager 的内存中。CheckPoint 时，将状态快照写入到配置的文件系统目录中。 少量的元数据信息存储到 JobManager 的内存中（高可用模式下，将其写入到 CheckPoint 的元数据文件中）。</p>
+<p>FsStateBackend 默认使用异步快照来防止 CheckPoint 写状态时对数据处理造成阻塞。 用户可以在实例化 <code>FsStateBackend</code> 的时候，将相应布尔类型的构造参数设置为 <code>false</code> 来关闭异步快照，例如：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">env.setStateBackend(<span class="keyword">new</span> <span class="type">FsStateBackend</span>(<span class="string">&quot;hdfs://hadoop:9000/flink/rocks_state_backend&quot;</span>))</span><br></pre></td></tr></table></figure>
+
+<p>FsStateBackend 适用场景:</p>
+<ul>
+<li>状态比较大、窗口比较长、key/value 状态比较大的 Job。</li>
+<li>所有高可用的场景。</li>
+</ul>
+<p>建议同时将 <a target="_blank" rel="noopener" href="https://ci.apache.org/projects/flink/flink-docs-release-1.10/zh/ops/memory/mem_setup.html#managed-memory">managed memory</a> 设为0，以保证将最大限度的内存分配给 JVM 上的用户代码。</p>
+<h3><span id="rocksdbstatebackend">RocksDBStateBackend</span></h3><p><em>RocksDBStateBackend</em> 需要配置一个文件系统的 URL （类型、地址、路径），例如：“hdfs://namenode:40010/flink/checkpoints” 或 “file:///data/flink/checkpoints”。</p>
+<p>RocksDBStateBackend 将正在运行中的状态数据保存在 <a target="_blank" rel="noopener" href="http://rocksdb.org/">RocksDB</a> 数据库中，RocksDB 数据库默认将数据存储在 TaskManager 的数据目录。 CheckPoint 时，整个 RocksDB 数据库被 checkpoint 到配置的文件系统目录中。 少量的元数据信息存储到 JobManager 的内存中（高可用模式下，将其存储到 CheckPoint 的元数据文件中）。RocksDBStateBackend 只支持异步快照。</p>
+<p>RocksDBStateBackend 的限制：</p>
+<ul>
+<li>由于 RocksDB 的 JNI API 构建在 byte[] 数据结构之上, 所以每个 key 和 value 最大支持 2^31 字节。 重要信息: RocksDB 合并操作的状态（例如：ListState）累积数据量大小可以超过 2^31 字节，但是会在下一次获取数据时失败。这是当前 RocksDB JNI 的限制。</li>
+</ul>
+<p>RocksDBStateBackend 的适用场景：</p>
+<ul>
+<li>状态非常大、窗口非常长、key/value 状态非常大的 Job。</li>
+<li>所有高可用的场景。</li>
+</ul>
+<p>注意，你可以保留的状态大小仅受磁盘空间的限制。与状态存储在内存中的 FsStateBackend 相比，RocksDBStateBackend 允许存储非常大的状态。 然而，这也意味着使用 RocksDBStateBackend 将会使应用程序的最大吞吐量降低。 所有的读写都必须序列化、反序列化操作，这个比基于堆内存的 state backend 的效率要低很多。</p>
+<p><a target="_blank" rel="noopener" href="https://ci.apache.org/projects/flink/flink-docs-release-1.10/zh/ops/state/state_backends.html">更多的进阶操作查看官网</a></p>
+<h3><span id="设置每个-job-的-state-backend">设置每个 Job 的 State Backend</span></h3><p><code>StreamExecutionEnvironment</code> 可以对每个 Job 的 State Backend 进行设置，如下所示：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> env = <span class="type">StreamExecutionEnvironment</span>.getExecutionEnvironment()</span><br><span class="line">env.setStateBackend(<span class="keyword">new</span> <span class="type">FsStateBackend</span>(<span class="string">&quot;hdfs://namenode:40010/flink/checkpoints&quot;</span>))</span><br></pre></td></tr></table></figure>
+
+<p>如果你想在 IDE 中使用 <code>RocksDBStateBackend</code>，或者需要在作业中通过编程方式动态配置 <code>RocksDBStateBackend</code>，必须添加以下依赖到 Flink 项目中。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.flink<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>flink-statebackend-rocksdb_2.11<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.10.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3><span id="设置默认的全局的-state-backend">设置默认的（全局的） State Backend</span></h3><p>在 <code>flink-conf.yaml</code> 可以通过键 <code>state.backend</code> 设置默认的 State Backend。</p>
+<p>可选值包括 <em>jobmanager</em> (MemoryStateBackend)、<em>filesystem</em> (FsStateBackend)、<em>rocksdb</em> (RocksDBStateBackend)， 或使用实现了 state backend 工厂 <a target="_blank" rel="noopener" href="https://github.com/apache/flink/blob/master/flink-runtime/src/main/java/org/apache/flink/runtime/state/StateBackendFactory.java">StateBackendFactory</a> 的类的全限定类名， 例如： RocksDBStateBackend 对应为 <code>org.apache.flink.contrib.streaming.state.RocksDBStateBackendFactory</code>。</p>
+<p><code>state.checkpoints.dir</code> 选项指定了所有 State Backend 写 CheckPoint 数据和写元数据文件的目录。 你能在这里找到关于 CheckPoint 目录结构的详细信息。</p>
+<p>配置文件的部分示例如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 用于存储 operator state 快照的 State Backend</span><br><span class="line">state.backend: filesystem</span><br><span class="line"></span><br><span class="line"># 存储快照的目录</span><br><span class="line">state.checkpoints.dir: hdfs:&#x2F;&#x2F;namenode:40010&#x2F;flink&#x2F;checkpoints</span><br></pre></td></tr></table></figure>
+
+<h3><span id="增量快照">增量快照</span></h3><p>RocksDBStateBackend 支持<em>增量快照</em>。不同于产生一个包含所有数据的全量备份，增量快照中只包含自上一次快照完成之后被修改的记录，因此可以显著减少快照完成的耗时。</p>
+<p>虽然状态数据量很大时我们推荐使用增量快照，但这并不是默认的快照机制，您需要通过下述配置手动开启该功能：</p>
+<ul>
+<li>在 <code>flink-conf.yaml</code> 中设置：<code>state.backend.incremental: true</code> 或者</li>
+<li>在代码中按照右侧方式配置（来覆盖默认配置）：<code>RocksDBStateBackend backend = new RocksDBStateBackend(filebackend, true);</code></li>
+</ul>
+<h3><span id="三种state-backends对比">三种State Backends对比</span></h3><table>
+<thead>
+<tr>
+<th>类别</th>
+<th>State</th>
+<th>Checkpoint</th>
+<th>场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MemoryStateBackend</td>
+<td>存在taskManager上的</td>
+<td>jobmanager</td>
+<td>测试</td>
+</tr>
+<tr>
+<td>FsStateBackend</td>
+<td>存在taskManager上的</td>
+<td>fs</td>
+<td>测试/部分生产</td>
+</tr>
+<tr>
+<td>RocksDBStateBackend</td>
+<td>存在RocksDB上</td>
+<td>hdfs</td>
+<td>生产</td>
+</tr>
+</tbody></table>
+
+    
+
+    
+    
+
+    
+
+    
+    
+    <p align='center' style='color:red; font-size:15px;'>
+      <span>-------------&emsp;</span>
+      <span>
+        
+          本文已结束，感谢阅读!
+        
+      <span>
+      <span>&emsp;-------------</span>
+    </p>
+    
+
+    
+      
+        
+
+
+
+<div class="declare"> 
+  <ul class="post-copyright">
+    <li>
+      <strong>本文作者: </strong>
+      wuji
+    </li>
+    <li>
+      <strong>本文链接: </strong>
+      <a href="https://liyaya0201.github.io/2020/05/21/Flink之State Backends/" title="Flink之State Backends" target="_blank">https://liyaya0201.github.io/2020/05/21/Flink之State Backends/</a>
+    </li>
+
+    <li>
+      <strong>发布时间: </strong>
+      2020年05月21日
+    </li>
+    <li>
+      <strong>最后更新: </strong>
+      2020年05月21日
+    </li>
+
+    
+    <li>
+      <span><strong>版权声明: </strong></span>
+      
+        <span>
+          本博客所有文章除特别声明外，均采用 
+          <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" title="知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议">CC BY-NC-SA 4.0</a>
+          进行许可。转载请注明出处！
+        </span>
+        
+      
+      
+    </li>
+    
+  </ul>
+
+</div>
+
+    
+    
+  
+
+  
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Kafka</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Flink</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+    
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/Kafka//" class="article-tag-list-link color1">Kafka</a>
+        			<a href="/categories/Flink//" class="article-tag-list-link color1">Flink</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+    
+
+    
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://liyaya0201.github.io/2020/05/21/Flink%E4%B9%8BState%20Backends/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
   </div>
 </article>
+
+
+<nav id="article-nav">
   
-    
-    
-      
-        </div></section>
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
+  
+    <a href="/2020/05/20/Flink%E4%B9%8BCheckpoint&Savepoint/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Flink之Checkpoint&amp;Savepoint</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2019/10/16/Kafka%E5%85%A5%E9%97%A8%E5%AE%9E%E6%88%98/" class="archive-article-date">
-        <time datetime="2019-10-15T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-16</time>
-</a>
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">可用的 State Backends</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">MemoryStateBackend</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">FsStateBackend</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">RocksDBStateBackend</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">5.</span> <span class="toc-text">设置每个 Job 的 State Backend</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">6.</span> <span class="toc-text">设置默认的（全局的） State Backend</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">7.</span> <span class="toc-text">增量快照</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">8.</span> <span class="toc-text">三种State Backends对比</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2019/10/16/Kafka%E5%85%A5%E9%97%A8%E5%AE%9E%E6%88%98/" target="_blank">Kafka常用命令</a>
-  
-    </h1>
-  
+        
+    </div>
+</aside>
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Kafka</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Kafka//" class="article-tag-list-link color1">Kafka</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
+  
+  
 
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <section id="comments" class="comments">
+      <style>
+        .utterances{max-width: 100%;}
+      </style>
+        <script src="https://utteranc.es/client.js"
+          repo="liyaya0201/liyaya0201.github.io"
+          issue-term="title"
+          theme="github-light"
+          crossorigin="anonymous"
+          async>
+        </script>
+    </section>
+  
+
+
+
+
+
+  <script>
+  (function(){
+      var bp = document.createElement('script');
+      bp.src = '//push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+  })();
+  </script>     
 
           </div>
         </div>
@@ -429,9 +704,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: true,
 		toc_hide_index: true,

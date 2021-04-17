@@ -102,10 +102,10 @@
 		</nav>
 		<nav style="font-size:13px; font-weight: bold;">
     	<span style="color:rgb(180,125,100)">总文章数: </span>
-    	<span style="color:rgb(99,88,25)">48</span>
+    	<span style="color:rgb(99,88,25)">49</span>
       <strong style="color:rgb(26, 73, 92)">|</strong>
       <span style="color:rgb(117, 122, 128)">总字数: </span>
-      <span class="post-count" style="color:rgb(51, 108, 122)">56.8k</span>
+      <span class="post-count" style="color:rgb(51, 108, 122)">57.9k</span>
 		</nav>
 
 		<nav class="header-smart-menu">
@@ -272,6 +272,129 @@
           </div>
           <div id="js-content" class="content-ll">
             
+
+  
+    <article id="post-Flink之Checkpoint&amp;Savepoint" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2020/05/20/Flink%E4%B9%8BCheckpoint&Savepoint/" target="_blank">Flink之Checkpoint&amp;Savepoint</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2020/05/20/Flink%E4%B9%8BCheckpoint&Savepoint/" class="archive-article-date">
+        <time datetime="2020-05-19T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-20</time>
+</a>
+
+  
+  
+    <div align="center">
+      
+
+    </div>
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+      <p>本文主要介绍了Checkpoint和Savepoint的作用，为了满足容错，必须要先开启checkpoint，伴随一个默认的重启策略，如果没有开启checkpoint，那么就不重启。checkpoint默认是在内存中的，重启之后，JVM销毁，内存里面的东西也就没了，因此我们要配置<a target="_blank" rel="noopener" href="https://ci.apache.org/projects/flink/flink-docs-release-1.10/ops/state/state_backends.html">State Backends</a></p>
+<p>参考官网链接</p>
+<p><a target="_blank" rel="noopener" href="https://ci.apache.org/projects/flink/flink-docs-release-1.10/dev/stream/state/checkpointing.html">Checkpoint</a></p>
+<p><a target="_blank" rel="noopener" href="https://ci.apache.org/projects/flink/flink-docs-release-1.10/ops/state/savepoints.html">Savepoint</a></p>
+      
+        <a class="article-more-a" href="/2020/05/20/Flink%E4%B9%8BCheckpoint&Savepoint/#more">more >></a>
+      
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+      
+        
+
+
+
+  <div class="declare" hidden="hidden"></div>
+
+    
+    
+  
+
+  
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Flink</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Flink//" class="article-tag-list-link color1">Flink</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2020/05/20/Flink%E4%B9%8BCheckpoint&Savepoint/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
 
   
     <article id="post-Flink之State管理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
@@ -1335,133 +1458,6 @@
     
     <p class="article-more-link">
       <a class="article-more-a" href="/2020/01/18/Yarn%E9%A1%B5%E9%9D%A2%E6%98%BE%E7%A4%BA%E5%8F%82%E6%95%B0%E8%A7%A3%E8%AF%BB/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-  
-    <article id="post-Azkaban的安装与常规使用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2019/12/18/Azkaban%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E5%B8%B8%E8%A7%84%E4%BD%BF%E7%94%A8/" target="_blank">Azkaban的安装与常规使用</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2019/12/18/Azkaban%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E5%B8%B8%E8%A7%84%E4%BD%BF%E7%94%A8/" class="archive-article-date">
-        <time datetime="2019-12-17T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-18</time>
-</a>
-
-  
-  
-    <div align="center">
-      
-
-    </div>
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-      <h2 id="Git的安装"><a href="#Git的安装" class="headerlink" title="Git的安装"></a>Git的安装</h2><p>在安装Azkaban之前要安装Git</p>
-<ol>
-<li><p>获取github最新的Git安装包下载链接，进入Linux服务器，执行下载，命令为</p>
-<blockquote>
-<p>wget <a target="_blank" rel="noopener" href="https://github.com/git/git/archive/v2.17.0.tar.gz">https://github.com/git/git/archive/v2.17.0.tar.gz</a></p>
-</blockquote>
-</li>
-</ol>
-      
-        <a class="article-more-a" href="/2019/12/18/Azkaban%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E5%B8%B8%E8%A7%84%E4%BD%BF%E7%94%A8/#more">more >></a>
-      
-    
-
-    
-    
-
-    
-
-    
-    
-
-    
-      
-        
-
-
-
-  <div class="declare" hidden="hidden"></div>
-
-    
-    
-  
-
-  
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Azkaban</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Azkaban//" class="article-tag-list-link color3">Azkaban</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2019/12/18/Azkaban%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E5%B8%B8%E8%A7%84%E4%BD%BF%E7%94%A8/">展开全文 >></a>
     </p>
     
 

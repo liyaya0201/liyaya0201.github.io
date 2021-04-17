@@ -6,19 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://liyaya0201.github.io">
-  <title>Archives: 2020/5 | 吃冰冰的喵酱</title>
+  <title>Flink之Checkpoint&amp;Savepoint | 吃冰冰的喵酱</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="喜欢看新闻的程序员">
-<meta property="og:type" content="website">
-<meta property="og:title" content="吃冰冰的喵酱">
-<meta property="og:url" content="https://liyaya0201.github.io/archives/2020/05/index.html">
+  <meta name="description" content="本文主要介绍了Checkpoint和Savepoint的作用，为了满足容错，必须要先开启checkpoint，伴随一个默认的重启策略，如果没有开启checkpoint，那么就不重启。checkpoint默认是在内存中的，重启之后，JVM销毁，内存里面的东西也就没了，因此我们要配置State Backends 参考官网链接 Checkpoint Savepoint">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flink之Checkpoint&amp;Savepoint">
+<meta property="og:url" content="https://liyaya0201.github.io/2020/05/20/Flink%E4%B9%8BCheckpoint&Savepoint/index.html">
 <meta property="og:site_name" content="吃冰冰的喵酱">
-<meta property="og:description" content="喜欢看新闻的程序员">
+<meta property="og:description" content="本文主要介绍了Checkpoint和Savepoint的作用，为了满足容错，必须要先开启checkpoint，伴随一个默认的重启策略，如果没有开启checkpoint，那么就不重启。checkpoint默认是在内存中的，重启之后，JVM销毁，内存里面的东西也就没了，因此我们要配置State Backends 参考官网链接 Checkpoint Savepoint">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-05-19T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-05-19T16:00:00.000Z">
 <meta property="article:author" content="wuji">
-<meta property="article:tag" content="Java,Hadoop,HIVE,Hbase,Kafka,CDH,Spark,Flink">
+<meta property="article:tag" content="Flink">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="吃冰冰的喵酱" type="application/atom+xml">
@@ -268,40 +270,184 @@
           </div>
           <div id="js-content" class="content-ll">
             
+
+
+<article id="post-Flink之Checkpoint&amp;Savepoint" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
   
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
+    <h1 class="article-title" itemprop="name">
+      Flink之Checkpoint&amp;Savepoint
+    </h1>
+  
+
+
+  
+  
 <a href="/2020/05/20/Flink%E4%B9%8BCheckpoint&Savepoint/" class="archive-article-date">
         <time datetime="2020-05-19T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-20</time>
 </a>
 
-        </div>
-    	 
   
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2020/05/20/Flink%E4%B9%8BCheckpoint&Savepoint/" target="_blank">Flink之Checkpoint&amp;Savepoint</a>
   
-    </h1>
-  
+    <div align="center">
+      
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">1.1k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">4分</span>
+    </span>
+  </span>
+</div>
 
 
-        <div class="article-info info-on-right">
-          
+    </div>
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+      
+      
+
+      
+
+      <p>本文主要介绍了Checkpoint和Savepoint的作用，为了满足容错，必须要先开启checkpoint，伴随一个默认的重启策略，如果没有开启checkpoint，那么就不重启。checkpoint默认是在内存中的，重启之后，JVM销毁，内存里面的东西也就没了，因此我们要配置<a target="_blank" rel="noopener" href="https://ci.apache.org/projects/flink/flink-docs-release-1.10/ops/state/state_backends.html">State Backends</a></p>
+<p>参考官网链接</p>
+<p><a target="_blank" rel="noopener" href="https://ci.apache.org/projects/flink/flink-docs-release-1.10/dev/stream/state/checkpointing.html">Checkpoint</a></p>
+<p><a target="_blank" rel="noopener" href="https://ci.apache.org/projects/flink/flink-docs-release-1.10/ops/state/savepoints.html">Savepoint</a></p>
+<span id="more"></span>
+
+<h2><span id="checkpoint">Checkpoint</span></h2><p>Flink 中的每个方法或算子都能够是<strong>有状态的</strong>。 状态化的方法在处理单个 elements/events 的时候存储数据，让状态成为使各个类型的算子更加精细的重要部分。 为了让状态容错，Flink 需要为状态添加 <strong>checkpoint（检查点）</strong>。Checkpoint 使得 Flink 能够恢复状态和在流中的位置，从而向应用提供和无故障执行时一样的语义。</p>
+<h3><span id="前提条件">前提条件</span></h3><ul>
+<li>一个能够回放一段时间内数据的持久化数据源(Kafka/HDFS)</li>
+<li>存放状态的持久化存储(HDFS)</li>
+</ul>
+<h3><span id="开启与配置-checkpoint">开启与配置 Checkpoint</span></h3><p>默认情况下 checkpoint 是禁用的。通过调用 <code>StreamExecutionEnvironment</code> 的 <code>enableCheckpointing(n)</code> 来启用 checkpoint，里面的 <em>n</em> 是进行 checkpoint 的间隔，单位毫秒。</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> env = <span class="type">StreamExecutionEnvironment</span>.getExecutionEnvironment()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 每 1000ms 开始一次 checkpoint</span></span><br><span class="line">env.enableCheckpointing(<span class="number">1000</span>)</span><br></pre></td></tr></table></figure>
+
+<p>Checkpoint 其他的属性包括：</p>
+<ul>
+<li><p><em>精确一次（exactly-once）对比至少一次（at-least-once）</em>：你可以选择向 <code>enableCheckpointing(long interval, CheckpointingMode mode)</code> 方法中传入一个模式来选择使用两种保证等级中的哪一种。 对于大多数应用来说，精确一次是较好的选择。至少一次可能与某些延迟超低（始终只有几毫秒）的应用的关联较大。</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://ci.apache.org/projects/flink/flink-docs-release-1.10/dev/stream/state/checkpointing.html">其它配置参数参考官网</a></p>
+</li>
+</ul>
+<h3><span id="保存-checkpoint">保存 Checkpoint</span></h3><p>Checkpoint 在默认的情况下仅用于恢复失败的作业，并不保留，当程序取消时 checkpoint 就会被删除。当然，你可以通过配置来保留 checkpoint，这些被保留的 checkpoint 在作业失败或取消时不会被清除。这样，你就可以使用该 checkpoint 来恢复失败的作业。</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">CheckpointConfig</span> config = env.getCheckpointConfig();</span><br><span class="line">config.enableExternalizedCheckpoints(<span class="type">ExternalizedCheckpointCleanup</span>.<span class="type">RETAIN_ON_CANCELLATION</span>);</span><br></pre></td></tr></table></figure>
+
+<p><code>ExternalizedCheckpointCleanup</code> 配置项定义了当作业取消时，对作业 checkpoint 的操作：</p>
+<ul>
+<li>**<code>ExternalizedCheckpointCleanup.RETAIN_ON_CANCELLATION</code>**：当作业取消时，保留作业的 checkpoint。注意，这种情况下，需要手动清除该作业保留的 checkpoint。</li>
+<li>**<code>ExternalizedCheckpointCleanup.DELETE_ON_CANCELLATION</code>**：当作业取消时，删除作业的 checkpoint。仅当作业失败时，作业的 checkpoint 才会被保留。</li>
+</ul>
+<h3><span id="目录结构">目录结构</span></h3><p>与 <a target="_blank" rel="noopener" href="https://ci.apache.org/projects/flink/flink-docs-release-1.10/zh/ops/state/savepoints.html">savepoints</a> 相似，checkpoint 由元数据文件、数据文件（与 state backend 相关）组成。可通过配置文件中 “state.checkpoints.dir” 配置项来指定元数据文件和数据文件的存储路径，另外也可以在代码中针对单个作业特别指定该配置项。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;user-defined-checkpoint-dir</span><br><span class="line">    &#x2F;&#123;job-id&#125;</span><br><span class="line">        |</span><br><span class="line">        + --shared&#x2F;</span><br><span class="line">        + --taskowned&#x2F;</span><br><span class="line">        + --chk-1&#x2F;</span><br><span class="line">        + --chk-2&#x2F;</span><br><span class="line">        + --chk-3&#x2F;</span><br><span class="line">        ...</span><br></pre></td></tr></table></figure>
+
+<p>其中 <strong>SHARED</strong> 目录保存了可能被多个 checkpoint 引用的文件，<strong>TASKOWNED</strong> 保存了不会被 JobManager 删除的文件，<strong>EXCLUSIVE</strong> 则保存那些仅被单个 checkpoint 引用的文件。</p>
+<ul>
+<li><p>通过配置文件全局配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">state.checkpoints.dir: hdfs:&#x2F;&#x2F;&#x2F;checkpoints&#x2F;</span><br></pre></td></tr></table></figure></li>
+<li><p>创建 state backend 对单个作业进行配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">env.setStateBackend(new RocksDBStateBackend(&quot;hdfs:&#x2F;&#x2F;&#x2F;checkpoints-data&#x2F;&quot;));</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2><span id="savepoint">Savepoint</span></h2><p>Savepoint 是依据 Flink checkpointing 机制所创建的流作业执行状态的一致镜像。 你可以使用 Savepoint 进行 Flink 作业的停止与重启、fork 或者更新。 Savepoint 由两部分组成：稳定存储（列入 HDFS，S3，…) 上包含二进制文件的目录（通常很大），和元数据文件（相对较小）。 稳定存储上的文件表示作业执行状态的数据镜像。</p>
+<p>Savepoint 的元数据文件以绝对路径的形式指向作为 Savepoint 的稳定存储上的所有文件的指针。</p>
+<p><a target="_blank" rel="noopener" href="https://ci.apache.org/projects/flink/flink-docs-release-1.10/ops/state/savepoints.html">更多内容查看官网</a></p>
+<h3><span id="savepoint和checkpoint-区别">Savepoint和Checkpoint 区别</span></h3><ul>
+<li>Checkpoint 的主要目的是为意外失败的作业提供恢复机制。 Checkpoint 的生命周期由 Flink 管理，即 Flink 创建，管理和删除 Checkpoint - 无需用户交互。 作为一种恢复和定期触发的方法，Checkpoint 实现有两个设计目标：i）轻量级创建和 ii）尽可能快地恢复。</li>
+<li>Savepoint 由用户创建，拥有和删除。 他们的用例是计划的，手动备份和恢复。 例如，升级 Flink 版本，调整用户逻辑，改变并行度，以及进行红蓝部署等。Savepoint 更多地关注可移植性和对前面提到的作业更改的支持。</li>
+</ul>
+
+    
+
+    
+    
+
+    
+
+    
+    
+    <p align='center' style='color:red; font-size:15px;'>
+      <span>-------------&emsp;</span>
+      <span>
+        
+          本文已结束，感谢阅读!
+        
+      <span>
+      <span>&emsp;-------------</span>
+    </p>
+    
+
+    
+      
+        
+
+
+
+<div class="declare"> 
+  <ul class="post-copyright">
+    <li>
+      <strong>本文作者: </strong>
+      wuji
+    </li>
+    <li>
+      <strong>本文链接: </strong>
+      <a href="https://liyaya0201.github.io/2020/05/20/Flink之Checkpoint&amp;Savepoint/" title="Flink之Checkpoint&amp;Savepoint" target="_blank">https://liyaya0201.github.io/2020/05/20/Flink之Checkpoint&amp;Savepoint/</a>
+    </li>
+
+    <li>
+      <strong>发布时间: </strong>
+      2020年05月20日
+    </li>
+    <li>
+      <strong>最后更新: </strong>
+      2020年05月20日
+    </li>
+
+    
+    <li>
+      <span><strong>版权声明: </strong></span>
+      
+        <span>
+          本博客所有文章除特别声明外，均采用 
+          <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" title="知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议">CC BY-NC-SA 4.0</a>
+          进行许可。转载请注明出处！
+        </span>
+        
+      
+      
+    </li>
+    
+  </ul>
+
+</div>
+
+    
+    
+  
+
+  
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -313,7 +459,7 @@
 		</ul>
 	</div>
 
-          
+    
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -326,72 +472,154 @@
 	</div>
 
 
+    
+
+    
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://liyaya0201.github.io/2020/05/20/Flink%E4%B9%8BCheckpoint&Savepoint/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2020/05/06/Flink%E4%B9%8BState%E7%AE%A1%E7%90%86/" class="archive-article-date">
-        <time datetime="2020-05-05T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-06</time>
-</a>
 
+
+<nav id="article-nav">
+  
+  
+    <a href="/2020/05/06/Flink%E4%B9%8BState%E7%AE%A1%E7%90%86/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Flink之State管理</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2020/05/06/Flink%E4%B9%8BState%E7%AE%A1%E7%90%86/" target="_blank">Flink之State管理</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Flink</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Flink//" class="article-tag-list-link color1">Flink</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">Checkpoint</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">1.1.</span> <span class="toc-text">前提条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">1.2.</span> <span class="toc-text">开启与配置 Checkpoint</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">1.3.</span> <span class="toc-text">保存 Checkpoint</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">1.4.</span> <span class="toc-text">目录结构</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">Savepoint</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.1.</span> <span class="toc-text">Savepoint和Checkpoint 区别</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
+        
+    </div>
+</aside>
+
+
+
   
 
-    
+  
+  
+  
 
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <section id="comments" class="comments">
+      <style>
+        .utterances{max-width: 100%;}
+      </style>
+        <script src="https://utteranc.es/client.js"
+          repo="liyaya0201/liyaya0201.github.io"
+          issue-term="title"
+          theme="github-light"
+          crossorigin="anonymous"
+          async>
+        </script>
+    </section>
+  
+
+
+
+
+
+  <script>
+  (function(){
+      var bp = document.createElement('script');
+      bp.src = '//push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+  })();
+  </script>     
 
           </div>
         </div>
@@ -419,8 +647,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,

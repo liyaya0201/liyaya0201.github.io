@@ -337,11 +337,11 @@
 <p>Committed Offset主要用于Consumer Rebalance。在Consumer Rebalance的过程中，一个partition被分配给了一个Consumer，那么这个Consumer该从什么位置开始消费消息呢？答案就是Committed Offset。另外，如果一个Consumer消费了5条消息（pull并且成功commitSync）之后宕机了，重新启动之后它仍然能够从第6条消息开始消费，因为Committed Offset已经被Kafka记录为5。</p>
 <p>总结一下，Current Offset是针对Consumer的pull过程的，它可以保证每次pull都返回不重复的消息；而Committed Offset是用于Consumer Rebalance过程的，它能够保证新的Consumer能够从正确的位置开始消费一个partition，从而避免重复消费。</p>
 <h2><span id="offset存储模型">Offset存储模型</span></h2><p>由于一个partition只能固定的交给一个消费者组中的一个消费者消费，因此Kafka保存offset时并不直接为每个消费者保存，而是以groupid-topic-partition -&gt; offset的方式保存。如图所示：</p>
-<p>![group-topic-partition-offset](Kafka Offset管理\group-topic-partition-offset.jpg)</p>
+<p>![group-topic-partition-offset](Kafka Offset管理/group-topic-partition-offset.jpg)</p>
 <p><strong>Kafka在保存Offset的时候，实际上是将Consumer Group和partition对应的offset以消息的方式保存在__consumers_offsets这个topic中</strong>。</p>
 <p>下图展示了__consumers_offsets中保存的offset消息的格式：</p>
-<p>![consumers_offsets](Kafka Offset管理\consumers_offsets.jpg)</p>
-<p>![consumers_offsets_data](Kafka Offset管理\consumers_offsets_data.jpg)</p>
+<p>![consumers_offsets](Kafka Offset管理/consumers_offsets.jpg)</p>
+<p>![consumers_offsets_data](Kafka Offset管理/consumers_offsets_data.jpg)</p>
 <p>如图所示，一条offset消息的格式为groupid-topic-partition -&gt; offset。因此consumer pull消息时，已知groupid和topic，又通过Coordinator分配partition的方式获得了对应的partition，自然能够通过Coordinator查找__consumers_offsets的方式获得最新的offset了。</p>
 <h2><span id="kafka-offset-的几种管理方式">Kafka Offset 的几种管理方式</span></h2><ul>
 <li><code>Spark Checkpoint：</code>在 Spark Streaming 执行Checkpoint 操作时，将 Kafka Offset 一并保存到 HDFS 中。这种方式的问题在于：当 Spark Streaming 应用升级或更新时，以及当Spark 本身更新时，Checkpoint 可能无法恢复。因而，不推荐采用这种方式。</li>

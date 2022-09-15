@@ -6,22 +6,26 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://liyaya0201.github.io">
-  <title>Kafka Offset管理 | 吃冰冰的喵酱</title>
+  <title>KafkaOffset管理 | 吃冰冰的喵酱</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
   <meta name="description" content="Kafka中的每个partition都由一系列有序的、不可变的消息组成，这些消息被连续的追加到partition中。partition中的每个消息都有一个连续的序号，用于partition唯一标识一条消息。 Offset记录着下一条将要发送给Consumer的消息的序号。 Offset从语义上来看有两种：Current Offset 和 Committed Offset">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Kafka Offset管理">
-<meta property="og:url" content="https://liyaya0201.github.io/2019/04/25/Kafka%20Offset%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:title" content="KafkaOffset管理">
+<meta property="og:url" content="https://liyaya0201.github.io/2019/04/25/KafkaOffset%E7%AE%A1%E7%90%86/index.html">
 <meta property="og:site_name" content="吃冰冰的喵酱">
 <meta property="og:description" content="Kafka中的每个partition都由一系列有序的、不可变的消息组成，这些消息被连续的追加到partition中。partition中的每个消息都有一个连续的序号，用于partition唯一标识一条消息。 Offset记录着下一条将要发送给Consumer的消息的序号。 Offset从语义上来看有两种：Current Offset 和 Committed Offset">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://liyaya0201.github.io/2019/04/25/KafkaOffset%E7%AE%A1%E7%90%86/group-topic-partition-offset.jpg">
+<meta property="og:image" content="https://liyaya0201.github.io/2019/04/25/KafkaOffset%E7%AE%A1%E7%90%86/consumers_offsets.jpg">
+<meta property="og:image" content="https://liyaya0201.github.io/2019/04/25/KafkaOffset%E7%AE%A1%E7%90%86/consumers_offsets_data.jpg">
 <meta property="article:published_time" content="2019-04-24T16:00:00.000Z">
 <meta property="article:modified_time" content="2019-04-24T16:00:00.000Z">
 <meta property="article:author" content="wuji">
 <meta property="article:tag" content="Spark">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://liyaya0201.github.io/2019/04/25/KafkaOffset%E7%AE%A1%E7%90%86/group-topic-partition-offset.jpg">
   
     <link rel="alternative" href="/atom.xml" title="吃冰冰的喵酱" type="application/atom+xml">
   
@@ -272,21 +276,21 @@
             
 
 
-<article id="post-Kafka Offset管理" class="article article-type-post " itemscope itemprop="blogPost">
+<article id="post-KafkaOffset管理" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
   
   
     <h1 class="article-title" itemprop="name">
-      Kafka Offset管理
+      KafkaOffset管理
     </h1>
   
 
 
   
   
-<a href="/2019/04/25/Kafka%20Offset%E7%AE%A1%E7%90%86/" class="archive-article-date">
+<a href="/2019/04/25/KafkaOffset%E7%AE%A1%E7%90%86/" class="archive-article-date">
         <time datetime="2019-04-24T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-25</time>
 </a>
 
@@ -337,11 +341,11 @@
 <p>Committed Offset主要用于Consumer Rebalance。在Consumer Rebalance的过程中，一个partition被分配给了一个Consumer，那么这个Consumer该从什么位置开始消费消息呢？答案就是Committed Offset。另外，如果一个Consumer消费了5条消息（pull并且成功commitSync）之后宕机了，重新启动之后它仍然能够从第6条消息开始消费，因为Committed Offset已经被Kafka记录为5。</p>
 <p>总结一下，Current Offset是针对Consumer的pull过程的，它可以保证每次pull都返回不重复的消息；而Committed Offset是用于Consumer Rebalance过程的，它能够保证新的Consumer能够从正确的位置开始消费一个partition，从而避免重复消费。</p>
 <h2><span id="offset存储模型">Offset存储模型</span></h2><p>由于一个partition只能固定的交给一个消费者组中的一个消费者消费，因此Kafka保存offset时并不直接为每个消费者保存，而是以groupid-topic-partition -&gt; offset的方式保存。如图所示：</p>
-<p>![group-topic-partition-offset](Kafka Offset管理/group-topic-partition-offset.jpg)</p>
+<p><img src="/2019/04/25/KafkaOffset%E7%AE%A1%E7%90%86/group-topic-partition-offset.jpg" alt="group-topic-partition-offset"></p>
 <p><strong>Kafka在保存Offset的时候，实际上是将Consumer Group和partition对应的offset以消息的方式保存在__consumers_offsets这个topic中</strong>。</p>
 <p>下图展示了__consumers_offsets中保存的offset消息的格式：</p>
-<p>![consumers_offsets](Kafka Offset管理/consumers_offsets.jpg)</p>
-<p>![consumers_offsets_data](Kafka Offset管理/consumers_offsets_data.jpg)</p>
+<p><img src="/2019/04/25/KafkaOffset%E7%AE%A1%E7%90%86/consumers_offsets.jpg" alt="consumers_offsets"></p>
+<p><img src="/2019/04/25/KafkaOffset%E7%AE%A1%E7%90%86/consumers_offsets_data.jpg" alt="consumers_offsets_data"></p>
 <p>如图所示，一条offset消息的格式为groupid-topic-partition -&gt; offset。因此consumer pull消息时，已知groupid和topic，又通过Coordinator分配partition的方式获得了对应的partition，自然能够通过Coordinator查找__consumers_offsets的方式获得最新的offset了。</p>
 <h2><span id="kafka-offset-的几种管理方式">Kafka Offset 的几种管理方式</span></h2><ul>
 <li><code>Spark Checkpoint：</code>在 Spark Streaming 执行Checkpoint 操作时，将 Kafka Offset 一并保存到 HDFS 中。这种方式的问题在于：当 Spark Streaming 应用升级或更新时，以及当Spark 本身更新时，Checkpoint 可能无法恢复。因而，不推荐采用这种方式。</li>
@@ -418,7 +422,7 @@
     </li>
     <li>
       <strong>本文链接: </strong>
-      <a href="https://liyaya0201.github.io/2019/04/25/Kafka Offset管理/" title="Kafka Offset管理" target="_blank">https://liyaya0201.github.io/2019/04/25/Kafka Offset管理/</a>
+      <a href="https://liyaya0201.github.io/2019/04/25/KafkaOffset管理/" title="KafkaOffset管理" target="_blank">https://liyaya0201.github.io/2019/04/25/KafkaOffset管理/</a>
     </li>
 
     <li>
@@ -530,7 +534,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://liyaya0201.github.io/2019/04/25/Kafka%20Offset%E7%AE%A1%E7%90%86/" alt="微信分享二维码"> -->
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://liyaya0201.github.io/2019/04/25/KafkaOffset%E7%AE%A1%E7%90%86/" alt="微信分享二维码"> -->
     </div>
 </div>
 

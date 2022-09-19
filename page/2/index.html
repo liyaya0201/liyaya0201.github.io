@@ -102,10 +102,10 @@
 		</nav>
 		<nav style="font-size:13px; font-weight: bold;">
     	<span style="color:rgb(180,125,100)">总文章数: </span>
-    	<span style="color:rgb(99,88,25)">57</span>
+    	<span style="color:rgb(99,88,25)">59</span>
       <strong style="color:rgb(26, 73, 92)">|</strong>
       <span style="color:rgb(117, 122, 128)">总字数: </span>
-      <span class="post-count" style="color:rgb(51, 108, 122)">73.6k</span>
+      <span class="post-count" style="color:rgb(51, 108, 122)">76.6k</span>
 		</nav>
 
 		<nav class="header-smart-menu">
@@ -272,6 +272,247 @@
           </div>
           <div id="js-content" class="content-ll">
             
+
+  
+    <article id="post-Flink之State管理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2020/05/06/Flink%E4%B9%8BState%E7%AE%A1%E7%90%86/" target="_blank">Flink之State管理</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2020/05/06/Flink%E4%B9%8BState%E7%AE%A1%E7%90%86/" class="archive-article-date">
+        <time datetime="2020-05-05T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-06</time>
+</a>
+
+  
+  
+    <div align="center">
+      
+
+    </div>
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+      <p>Flink 中有两种基本的状态：<code>Keyed State</code> 和 <code>Operator State</code>。</p>
+<p><a target="_blank" rel="noopener" href="https://ci.apache.org/projects/flink/flink-docs-release-1.10/dev/stream/state/state.html">官网链接</a></p>
+      
+        <a class="article-more-a" href="/2020/05/06/Flink%E4%B9%8BState%E7%AE%A1%E7%90%86/#more">more >></a>
+      
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+      
+        
+
+
+
+  <div class="declare" hidden="hidden"></div>
+
+    
+    
+  
+
+  
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Flink</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Flink//" class="article-tag-list-link color1">Flink</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2020/05/06/Flink%E4%B9%8BState%E7%AE%A1%E7%90%86/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+  
+    <article id="post-Kafka分区分配策略分析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2020/04/25/Kafka%E5%88%86%E5%8C%BA%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5%E5%88%86%E6%9E%90/" target="_blank">Kafka分区分配策略分析</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2020/04/25/Kafka%E5%88%86%E5%8C%BA%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5%E5%88%86%E6%9E%90/" class="archive-article-date">
+        <time datetime="2020-04-24T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-25</time>
+</a>
+
+  
+  
+    <div align="center">
+      
+
+    </div>
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+      <p>本文主要介绍了Kafka的几种分区分配策略：RangeAssignor、RoundRobinAssignor、StickyAssignor。其中重点分析了StickyAssignor的实现，StickyAssignor的模式能比RangeAssignor和RoundRobinAssignor提供更加均衡的分配结果，在发生Consumer或者Partition变更的情况下，也能减少不必要的分区调整。总体而言StickyAssignor是一种更好的分配算法，只是实现上稍微有一些复杂。</p>
+      
+        <a class="article-more-a" href="/2020/04/25/Kafka%E5%88%86%E5%8C%BA%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5%E5%88%86%E6%9E%90/#more">more >></a>
+      
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+      
+        
+
+
+
+  <div class="declare" hidden="hidden"></div>
+
+    
+    
+  
+
+  
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Kafka</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Kafka//" class="article-tag-list-link color1">Kafka</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2020/04/25/Kafka%E5%88%86%E5%8C%BA%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5%E5%88%86%E6%9E%90/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
 
   
     <article id="post-Azkaban配置Plugin实现Spark作业提交" class="article article-type-post  article-index" itemscope itemprop="blogPost">
@@ -1221,247 +1462,6 @@
     
     <p class="article-more-link">
       <a class="article-more-a" href="/2019/12/18/Azkaban%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E5%B8%B8%E8%A7%84%E4%BD%BF%E7%94%A8/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-  
-    <article id="post-Kafka常用的参数调优" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2019/12/06/Kafka%E5%B8%B8%E7%94%A8%E7%9A%84%E5%8F%82%E6%95%B0%E8%B0%83%E4%BC%98/" target="_blank">Kafka常用的参数调优</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2019/12/06/Kafka%E5%B8%B8%E7%94%A8%E7%9A%84%E5%8F%82%E6%95%B0%E8%B0%83%E4%BC%98/" class="archive-article-date">
-        <time datetime="2019-12-05T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-06</time>
-</a>
-
-  
-  
-    <div align="center">
-      
-
-    </div>
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-      <p>本文从Producer、Broker、Consumer三个方面介绍Kafka的参数调优</p>
-      
-        <a class="article-more-a" href="/2019/12/06/Kafka%E5%B8%B8%E7%94%A8%E7%9A%84%E5%8F%82%E6%95%B0%E8%B0%83%E4%BC%98/#more">more >></a>
-      
-    
-
-    
-    
-
-    
-
-    
-    
-
-    
-      
-        
-
-
-
-  <div class="declare" hidden="hidden"></div>
-
-    
-    
-  
-
-  
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Kafka</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Kafka//" class="article-tag-list-link color1">Kafka</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2019/12/06/Kafka%E5%B8%B8%E7%94%A8%E7%9A%84%E5%8F%82%E6%95%B0%E8%B0%83%E4%BC%98/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-  
-    <article id="post-Flume自定义Source&amp;&amp;Sink&amp;&amp;Interceptor" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2019/12/02/Flume%E8%87%AA%E5%AE%9A%E4%B9%89Source&&Sink&&Interceptor/" target="_blank">Flume自定义Source&amp;&amp;Sink&amp;&amp;Interceptor</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2019/12/02/Flume%E8%87%AA%E5%AE%9A%E4%B9%89Source&&Sink&&Interceptor/" class="archive-article-date">
-        <time datetime="2019-12-01T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-02</time>
-</a>
-
-  
-  
-    <div align="center">
-      
-
-    </div>
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-      <h3 id="1-自定义Source"><a href="#1-自定义Source" class="headerlink" title="1. 自定义Source"></a>1. 自定义Source</h3><p>从MySQL作为数据源的，不用从头到尾自己写<br>建议直接Google GitHub 找 搬<br><a target="_blank" rel="noopener" href="https://github.com/keedio/flume-ng-sql-source">参考链接</a></p>
-<p>需求：在数据源里直接产生数据，产生的数据可以定制化（前缀、后缀）</p>
-      
-        <a class="article-more-a" href="/2019/12/02/Flume%E8%87%AA%E5%AE%9A%E4%B9%89Source&&Sink&&Interceptor/#more">more >></a>
-      
-    
-
-    
-    
-
-    
-
-    
-    
-
-    
-      
-        
-
-
-
-  <div class="declare" hidden="hidden"></div>
-
-    
-    
-  
-
-  
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Flume</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Flume//" class="article-tag-list-link color1">Flume</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2019/12/02/Flume%E8%87%AA%E5%AE%9A%E4%B9%89Source&&Sink&&Interceptor/">展开全文 >></a>
     </p>
     
 

@@ -20,7 +20,7 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/liyaya0201/PictureBed/BlogImage/202209191537079.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/liyaya0201/PictureBed/BlogImage/202209191537434.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/liyaya0201/PictureBed/BlogImage/202209191537127.png">
-<meta property="og:image" content="https://liyaya0201.github.io/2022/02/25/Flink%20Window/Users/烟花易冷/AppData/Roaming/Typora/typora-user-images/image-20220428035407622.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/liyaya0201/PictureBed/BlogImage/202209191544441.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/liyaya0201/PictureBed/BlogImage/202209191537010.png">
 <meta property="article:published_time" content="2022-02-24T16:00:00.000Z">
 <meta property="article:modified_time" content="2022-02-24T16:00:00.000Z">
@@ -423,7 +423,7 @@
 <p>编译报错</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">type mismatch;</span><br><span class="line"> found   : org.apache.flink.streaming.api.windowing.assigners.TumblingProcessingTimeWindows</span><br><span class="line"> required: org.apache.flink.streaming.api.windowing.assigners.WindowAssigner[_ &gt;: Int, ?]</span><br><span class="line">Note: Object &lt;: Any (and org.apache.flink.streaming.api.windowing.assigners.TumblingProcessingTimeWindows &lt;: org.apache.flink.streaming.api.windowing.assigners.WindowAssigner[Object,org.apache.flink.streaming.api.windowing.windows.TimeWindow]), but Java-defined class WindowAssigner is invariant in type T.</span><br><span class="line">You may wish to investigate a wildcard type such as &#96;_ &lt;: Any&#96;. (SLS 3.2.10)</span><br><span class="line">    lines.windowAll(TumblingProcessingTimeWindows.of(Time.seconds(5)))</span><br></pre></td></tr></table></figure>
 
-<p><img src="/2022/02/25/Flink%20Window/Users\烟花易冷\AppData\Roaming\Typora\typora-user-images\image-20220428035407622.png" alt="image-20220428035407622"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/liyaya0201/PictureBed/BlogImage/202209191544441.png" alt="type mismatch"></p>
 <p>原因以及解决方案</p>
 <p><a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/FLINK-18599">issue FLINK-18599</a></p>
 <p>再次修改代码如下</p>

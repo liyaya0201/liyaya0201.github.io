@@ -102,10 +102,10 @@
 		</nav>
 		<nav style="font-size:13px; font-weight: bold;">
     	<span style="color:rgb(180,125,100)">总文章数: </span>
-    	<span style="color:rgb(99,88,25)">59</span>
+    	<span style="color:rgb(99,88,25)">64</span>
       <strong style="color:rgb(26, 73, 92)">|</strong>
       <span style="color:rgb(117, 122, 128)">总字数: </span>
-      <span class="post-count" style="color:rgb(51, 108, 122)">76.6k</span>
+      <span class="post-count" style="color:rgb(51, 108, 122)">83.9k</span>
 		</nav>
 
 		<nav class="header-smart-menu">
@@ -272,6 +272,615 @@
           </div>
           <div id="js-content" class="content-ll">
             
+
+  
+    <article id="post-Flink自定义Source" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2022/02/20/Flink%E8%87%AA%E5%AE%9A%E4%B9%89Source/" target="_blank">Flink自定义Source</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2022/02/20/Flink%E8%87%AA%E5%AE%9A%E4%B9%89Source/" class="archive-article-date">
+        <time datetime="2022-02-19T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-02-20</time>
+</a>
+
+  
+  
+    <div align="center">
+      
+
+    </div>
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+      <p>本文主要介绍了 Flink 中如何自定义 Source，并实现了常用的 Source，如 MySQL、Kafka</p>
+      
+        <a class="article-more-a" href="/2022/02/20/Flink%E8%87%AA%E5%AE%9A%E4%B9%89Source/#more">more >></a>
+      
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+      
+        
+
+
+
+  <div class="declare" hidden="hidden"></div>
+
+    
+    
+  
+
+  
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Flink</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Flink//" class="article-tag-list-link color1">Flink</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2022/02/20/Flink%E8%87%AA%E5%AE%9A%E4%B9%89Source/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+  
+    <article id="post-Flink批流处理初识&amp;Source数据源的并行度" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2022/02/16/Flink%E6%89%B9%E6%B5%81%E5%A4%84%E7%90%86%E5%88%9D%E8%AF%86&Source%E6%95%B0%E6%8D%AE%E6%BA%90%E7%9A%84%E5%B9%B6%E8%A1%8C%E5%BA%A6/" target="_blank">Flink批流处理初识&amp;Source数据源的并行度</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2022/02/16/Flink%E6%89%B9%E6%B5%81%E5%A4%84%E7%90%86%E5%88%9D%E8%AF%86&Source%E6%95%B0%E6%8D%AE%E6%BA%90%E7%9A%84%E5%B9%B6%E8%A1%8C%E5%BA%A6/" class="archive-article-date">
+        <time datetime="2022-02-15T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-02-16</time>
+</a>
+
+  
+  
+    <div align="center">
+      
+
+    </div>
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+      <p>本文主要介绍了 Flink 的特点、部署、如何与 idea 整合。通过批处理与流处理的 WordCount 案例熟悉了 Flink 的编程模型，分别用 Scala 与 Java 实现了这个功能。此外还介绍了 Source 数据源的并行度问题：通过实现 SourceFunction 接口编写自定义的非并行 source，也可以通过实现 ParallelSourceFunction 接口或者继承 RichParallelSourceFunction 类编写自定义的并行 sources。</p>
+      
+        <a class="article-more-a" href="/2022/02/16/Flink%E6%89%B9%E6%B5%81%E5%A4%84%E7%90%86%E5%88%9D%E8%AF%86&Source%E6%95%B0%E6%8D%AE%E6%BA%90%E7%9A%84%E5%B9%B6%E8%A1%8C%E5%BA%A6/#more">more >></a>
+      
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+      
+        
+
+
+
+  <div class="declare" hidden="hidden"></div>
+
+    
+    
+  
+
+  
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Flink</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Flink//" class="article-tag-list-link color1">Flink</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2022/02/16/Flink%E6%89%B9%E6%B5%81%E5%A4%84%E7%90%86%E5%88%9D%E8%AF%86&Source%E6%95%B0%E6%8D%AE%E6%BA%90%E7%9A%84%E5%B9%B6%E8%A1%8C%E5%BA%A6/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+  
+    <article id="post-Flink之最难理解的Watermark剖析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2020/05/22/Flink%E4%B9%8B%E6%9C%80%E9%9A%BE%E7%90%86%E8%A7%A3%E7%9A%84Watermark%E5%89%96%E6%9E%90/" target="_blank">Flink之最难理解的Watermark剖析</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2020/05/22/Flink%E4%B9%8B%E6%9C%80%E9%9A%BE%E7%90%86%E8%A7%A3%E7%9A%84Watermark%E5%89%96%E6%9E%90/" class="archive-article-date">
+        <time datetime="2020-05-21T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-22</time>
+</a>
+
+  
+  
+    <div align="center">
+      
+
+    </div>
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+      <p>本文主要介绍了 Window 的触发器以及 Watermark 的深度剖析</p>
+      
+        <a class="article-more-a" href="/2020/05/22/Flink%E4%B9%8B%E6%9C%80%E9%9A%BE%E7%90%86%E8%A7%A3%E7%9A%84Watermark%E5%89%96%E6%9E%90/#more">more >></a>
+      
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+      
+        
+
+
+
+  <div class="declare" hidden="hidden"></div>
+
+    
+    
+  
+
+  
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Flink</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Flink//" class="article-tag-list-link color1">Flink</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2020/05/22/Flink%E4%B9%8B%E6%9C%80%E9%9A%BE%E7%90%86%E8%A7%A3%E7%9A%84Watermark%E5%89%96%E6%9E%90/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+  
+    <article id="post-Flink之State Backends" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2020/05/21/Flink%E4%B9%8BState%20Backends/" target="_blank">Flink之State Backends</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2020/05/21/Flink%E4%B9%8BState%20Backends/" class="archive-article-date">
+        <time datetime="2020-05-20T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-21</time>
+</a>
+
+  
+  
+    <div align="center">
+      
+
+    </div>
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+      <p>用 Data Stream API 编写的程序通常以各种形式保存状态：</p>
+<ul>
+<li>在 Window 触发之前要么收集元素、要么聚合</li>
+<li>转换函数可以使用 key/value 格式的状态接口来存储状态</li>
+<li>转换函数可以实现 <code>CheckpointedFunction</code> 接口，使其本地变量具有容错能力</li>
+</ul>
+<p>在启动 CheckPoint 机制时，状态会随着 CheckPoint 而持久化，以防止数据丢失、保障恢复时的一致性。 状态内部的存储格式、状态在 CheckPoint 时如何持久化以及持久化在哪里均取决于选择的 <strong>State Backend</strong>。</p>
+      
+        <a class="article-more-a" href="/2020/05/21/Flink%E4%B9%8BState%20Backends/#more">more >></a>
+      
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+      
+        
+
+
+
+  <div class="declare" hidden="hidden"></div>
+
+    
+    
+  
+
+  
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Flink</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Flink//" class="article-tag-list-link color1">Flink</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2020/05/21/Flink%E4%B9%8BState%20Backends/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+  
+    <article id="post-Flink之Checkpoint&amp;Savepoint" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2020/05/20/Flink%E4%B9%8BCheckpoint&Savepoint/" target="_blank">Flink之Checkpoint&amp;Savepoint</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2020/05/20/Flink%E4%B9%8BCheckpoint&Savepoint/" class="archive-article-date">
+        <time datetime="2020-05-19T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-20</time>
+</a>
+
+  
+  
+    <div align="center">
+      
+
+    </div>
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+      <p>本文主要介绍了Checkpoint和Savepoint的作用，为了满足容错，必须要先开启checkpoint，伴随一个默认的重启策略，如果没有开启checkpoint，那么就不重启。checkpoint默认是在内存中的，重启之后，JVM销毁，内存里面的东西也就没了，因此我们要配置<a target="_blank" rel="noopener" href="https://ci.apache.org/projects/flink/flink-docs-release-1.10/ops/state/state_backends.html">State Backends</a></p>
+<p>参考官网链接</p>
+<p><a target="_blank" rel="noopener" href="https://ci.apache.org/projects/flink/flink-docs-release-1.10/dev/stream/state/checkpointing.html">Checkpoint</a></p>
+<p><a target="_blank" rel="noopener" href="https://ci.apache.org/projects/flink/flink-docs-release-1.10/ops/state/savepoints.html">Savepoint</a></p>
+      
+        <a class="article-more-a" href="/2020/05/20/Flink%E4%B9%8BCheckpoint&Savepoint/#more">more >></a>
+      
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+      
+        
+
+
+
+  <div class="declare" hidden="hidden"></div>
+
+    
+    
+  
+
+  
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Flink</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Flink//" class="article-tag-list-link color1">Flink</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2020/05/20/Flink%E4%B9%8BCheckpoint&Savepoint/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
 
   
     <article id="post-Flink之State管理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
@@ -878,623 +1487,9 @@
 
 
   
-    <article id="post-SparkSQL自定义外部Text数据源" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2020/02/12/SparkSQL%E8%87%AA%E5%AE%9A%E4%B9%89%E5%A4%96%E9%83%A8Text%E6%95%B0%E6%8D%AE%E6%BA%90/" target="_blank">SparkSQL自定义外部Text数据源</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2020/02/12/SparkSQL%E8%87%AA%E5%AE%9A%E4%B9%89%E5%A4%96%E9%83%A8Text%E6%95%B0%E6%8D%AE%E6%BA%90/" class="archive-article-date">
-        <time datetime="2020-02-11T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-12</time>
-</a>
-
-  
-  
-    <div align="center">
-      
-
-    </div>
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-      <ol>
-<li><p>创建DefaultSource类实现Trait RelationProvider，注意这里的类名必须是DefaultSource，源码中写死了</p></li></ol>
-      
-        <a class="article-more-a" href="/2020/02/12/SparkSQL%E8%87%AA%E5%AE%9A%E4%B9%89%E5%A4%96%E9%83%A8Text%E6%95%B0%E6%8D%AE%E6%BA%90/#more">more >></a>
-      
-    
-
-    
-    
-
-    
-
-    
-    
-
-    
-      
-        
-
-
-
-  <div class="declare" hidden="hidden"></div>
-
-    
-    
-  
-
-  
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Spark</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Spark//" class="article-tag-list-link color1">Spark</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2020/02/12/SparkSQL%E8%87%AA%E5%AE%9A%E4%B9%89%E5%A4%96%E9%83%A8Text%E6%95%B0%E6%8D%AE%E6%BA%90/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-  
-    <article id="post-spark-shell脚本解读" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2020/02/10/spark-shell%E8%84%9A%E6%9C%AC%E8%A7%A3%E8%AF%BB/" target="_blank">spark-shell脚本解读</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2020/02/10/spark-shell%E8%84%9A%E6%9C%AC%E8%A7%A3%E8%AF%BB/" class="archive-article-date">
-        <time datetime="2020-02-09T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-10</time>
-</a>
-
-  
-  
-    <div align="center">
-      
-
-    </div>
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-      <p>本文主要分析一下Spark源码中启动spark-shell脚本的执行逻辑，从spark-shell一步步深入进去看看任务提交的整体流程。</p>
-      
-        <a class="article-more-a" href="/2020/02/10/spark-shell%E8%84%9A%E6%9C%AC%E8%A7%A3%E8%AF%BB/#more">more >></a>
-      
-    
-
-    
-    
-
-    
-
-    
-    
-
-    
-      
-        
-
-
-
-  <div class="declare" hidden="hidden"></div>
-
-    
-    
-  
-
-  
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Spark</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Spark//" class="article-tag-list-link color1">Spark</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2020/02/10/spark-shell%E8%84%9A%E6%9C%AC%E8%A7%A3%E8%AF%BB/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-  
-    <article id="post-JDBC外部数据源实现源码debug" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2020/02/06/JDBC%E5%A4%96%E9%83%A8%E6%95%B0%E6%8D%AE%E6%BA%90%E5%AE%9E%E7%8E%B0%E6%BA%90%E7%A0%81debug/" target="_blank">JDBC外部数据源实现源码debug</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2020/02/06/JDBC%E5%A4%96%E9%83%A8%E6%95%B0%E6%8D%AE%E6%BA%90%E5%AE%9E%E7%8E%B0%E6%BA%90%E7%A0%81debug/" class="archive-article-date">
-        <time datetime="2020-02-05T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-06</time>
-</a>
-
-  
-  
-    <div align="center">
-      
-
-    </div>
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-      <p>一句话：一行代码返回 schema，另一行代码返回的是 RDD[Row]</p>
-<p>通过RDD转换成DF的第二种方式，创建一个DF</p>
-      
-        <a class="article-more-a" href="/2020/02/06/JDBC%E5%A4%96%E9%83%A8%E6%95%B0%E6%8D%AE%E6%BA%90%E5%AE%9E%E7%8E%B0%E6%BA%90%E7%A0%81debug/#more">more >></a>
-      
-    
-
-    
-    
-
-    
-
-    
-    
-
-    
-      
-        
-
-
-
-  <div class="declare" hidden="hidden"></div>
-
-    
-    
-  
-
-  
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Spark</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Spark//" class="article-tag-list-link color1">Spark</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2020/02/06/JDBC%E5%A4%96%E9%83%A8%E6%95%B0%E6%8D%AE%E6%BA%90%E5%AE%9E%E7%8E%B0%E6%BA%90%E7%A0%81debug/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-  
-    <article id="post-Yarn页面显示参数解读" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2020/01/18/Yarn%E9%A1%B5%E9%9D%A2%E6%98%BE%E7%A4%BA%E5%8F%82%E6%95%B0%E8%A7%A3%E8%AF%BB/" target="_blank">Yarn页面显示参数解读</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2020/01/18/Yarn%E9%A1%B5%E9%9D%A2%E6%98%BE%E7%A4%BA%E5%8F%82%E6%95%B0%E8%A7%A3%E8%AF%BB/" class="archive-article-date">
-        <time datetime="2020-01-17T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-18</time>
-</a>
-
-  
-  
-    <div align="center">
-      
-
-    </div>
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-      <p>我们提交一个Spark on Yarn作业，使用默认的参数，Yarn页面上的值是怎么来的呢？今天我们就来研究一下</p>
-<p><img src="https://img-blog.csdnimg.cn/20200112004058179.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpeWF5YTAyMDE=,size_16,color_FFFFFF,t_70" alt="YARN UI"></p>
-      
-        <a class="article-more-a" href="/2020/01/18/Yarn%E9%A1%B5%E9%9D%A2%E6%98%BE%E7%A4%BA%E5%8F%82%E6%95%B0%E8%A7%A3%E8%AF%BB/#more">more >></a>
-      
-    
-
-    
-    
-
-    
-
-    
-    
-
-    
-      
-        
-
-
-
-  <div class="declare" hidden="hidden"></div>
-
-    
-    
-  
-
-  
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Hadoop</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Yarn</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Hadoop//" class="article-tag-list-link color2">Hadoop</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2020/01/18/Yarn%E9%A1%B5%E9%9D%A2%E6%98%BE%E7%A4%BA%E5%8F%82%E6%95%B0%E8%A7%A3%E8%AF%BB/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-  
-    <article id="post-Azkaban的安装与常规使用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2019/12/18/Azkaban%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E5%B8%B8%E8%A7%84%E4%BD%BF%E7%94%A8/" target="_blank">Azkaban的安装与常规使用</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2019/12/18/Azkaban%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E5%B8%B8%E8%A7%84%E4%BD%BF%E7%94%A8/" class="archive-article-date">
-        <time datetime="2019-12-17T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-18</time>
-</a>
-
-  
-  
-    <div align="center">
-      
-
-    </div>
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-      <h2 id="Git的安装"><a href="#Git的安装" class="headerlink" title="Git的安装"></a>Git的安装</h2><p>在安装Azkaban之前要安装Git</p>
-<ol>
-<li><p>获取github最新的Git安装包下载链接，进入Linux服务器，执行下载，命令为</p>
-<blockquote>
-<p>wget <a target="_blank" rel="noopener" href="https://github.com/git/git/archive/v2.17.0.tar.gz">https://github.com/git/git/archive/v2.17.0.tar.gz</a></p>
-</blockquote>
-</li>
-</ol>
-      
-        <a class="article-more-a" href="/2019/12/18/Azkaban%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E5%B8%B8%E8%A7%84%E4%BD%BF%E7%94%A8/#more">more >></a>
-      
-    
-
-    
-    
-
-    
-
-    
-    
-
-    
-      
-        
-
-
-
-  <div class="declare" hidden="hidden"></div>
-
-    
-    
-  
-
-  
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Azkaban</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Azkaban//" class="article-tag-list-link color3">Azkaban</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2019/12/18/Azkaban%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E5%B8%B8%E8%A7%84%E4%BD%BF%E7%94%A8/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&lt; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/">Next &gt;</a>
+      <a class="extend prev" rel="prev" href="/">&lt; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/3/">Next &gt;</a>
     </nav>
   
 
@@ -1600,6 +1595,10 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">JVM</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Flink</a>
               </li>
              
@@ -1624,11 +1623,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">MapReduce</a>
+                <a href="javascript:void(0)" class="js-tag color1">Scala</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Scala</a>
+                <a href="javascript:void(0)" class="js-tag color5">MapReduce</a>
               </li>
              
               <li class="article-tag-list-item">

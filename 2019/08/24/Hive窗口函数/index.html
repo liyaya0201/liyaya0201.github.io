@@ -6,28 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://liyaya0201.github.io">
-  <title>SparkCore多目录输出&amp;累加器&amp;持久化&amp;广播变量 | 吃冰冰的喵酱</title>
+  <title>Hive窗口函数 | 吃冰冰的喵酱</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="今天我们来看一下RDD中的累机器、持久化和广播变量 官网链接">
+  <meta name="description" content="本文主要介绍了 Hive 的窗口分析函数的用法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SparkCore多目录输出&amp;累加器&amp;持久化&amp;广播变量">
-<meta property="og:url" content="https://liyaya0201.github.io/2019/01/18/SparkCore%E5%A4%9A%E7%9B%AE%E5%BD%95%E8%BE%93%E5%87%BA&%E7%B4%AF%E5%8A%A0%E5%99%A8&%E6%8C%81%E4%B9%85%E5%8C%96&%E5%B9%BF%E6%92%AD%E5%8F%98%E9%87%8F/index.html">
+<meta property="og:title" content="Hive窗口函数">
+<meta property="og:url" content="https://liyaya0201.github.io/2019/08/24/Hive%E7%AA%97%E5%8F%A3%E5%87%BD%E6%95%B0/index.html">
 <meta property="og:site_name" content="吃冰冰的喵酱">
-<meta property="og:description" content="今天我们来看一下RDD中的累机器、持久化和广播变量 官网链接">
+<meta property="og:description" content="本文主要介绍了 Hive 的窗口分析函数的用法">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://liyaya0201.github.io/2019/01/18/SparkCore%E5%A4%9A%E7%9B%AE%E5%BD%95%E8%BE%93%E5%87%BA&%E7%B4%AF%E5%8A%A0%E5%99%A8&%E6%8C%81%E4%B9%85%E5%8C%96&%E5%B9%BF%E6%92%AD%E5%8F%98%E9%87%8F/image-20210408143209167.png">
-<meta property="og:image" content="https://liyaya0201.github.io/2019/01/18/SparkCore%E5%A4%9A%E7%9B%AE%E5%BD%95%E8%BE%93%E5%87%BA&%E7%B4%AF%E5%8A%A0%E5%99%A8&%E6%8C%81%E4%B9%85%E5%8C%96&%E5%B9%BF%E6%92%AD%E5%8F%98%E9%87%8F/%E7%B4%AF%E5%8A%A0%E5%99%A8%E9%94%99%E8%AF%AF%E7%9A%84%E5%9B%BE%E8%A7%A3.png">
-<meta property="og:image" content="https://liyaya0201.github.io/2019/01/18/SparkCore%E5%A4%9A%E7%9B%AE%E5%BD%95%E8%BE%93%E5%87%BA&%E7%B4%AF%E5%8A%A0%E5%99%A8&%E6%8C%81%E4%B9%85%E5%8C%96&%E5%B9%BF%E6%92%AD%E5%8F%98%E9%87%8F/%E7%B4%AF%E5%8A%A0%E5%99%A8%E6%AD%A3%E7%A1%AE%E7%9A%84%E5%9B%BE%E8%A7%A3.png">
-<meta property="og:image" content="https://liyaya0201.github.io/2019/01/18/SparkCore%E5%A4%9A%E7%9B%AE%E5%BD%95%E8%BE%93%E5%87%BA&%E7%B4%AF%E5%8A%A0%E5%99%A8&%E6%8C%81%E4%B9%85%E5%8C%96&%E5%B9%BF%E6%92%AD%E5%8F%98%E9%87%8F/%E4%B8%8D%E4%BD%BF%E7%94%A8%E5%B9%BF%E6%92%AD%E5%8F%98%E9%87%8F.png">
-<meta property="og:image" content="https://liyaya0201.github.io/2019/01/18/SparkCore%E5%A4%9A%E7%9B%AE%E5%BD%95%E8%BE%93%E5%87%BA&%E7%B4%AF%E5%8A%A0%E5%99%A8&%E6%8C%81%E4%B9%85%E5%8C%96&%E5%B9%BF%E6%92%AD%E5%8F%98%E9%87%8F/%E4%BD%BF%E7%94%A8%E5%B9%BF%E6%92%AD%E5%8F%98%E9%87%8F.png">
-<meta property="article:published_time" content="2019-01-17T16:00:00.000Z">
-<meta property="article:modified_time" content="2019-01-17T16:00:00.000Z">
+<meta property="article:published_time" content="2019-08-23T16:00:00.000Z">
+<meta property="article:modified_time" content="2019-08-23T16:00:00.000Z">
 <meta property="article:author" content="wuji">
-<meta property="article:tag" content="Spark">
+<meta property="article:tag" content="Hive">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://liyaya0201.github.io/2019/01/18/SparkCore%E5%A4%9A%E7%9B%AE%E5%BD%95%E8%BE%93%E5%87%BA&%E7%B4%AF%E5%8A%A0%E5%99%A8&%E6%8C%81%E4%B9%85%E5%8C%96&%E5%B9%BF%E6%92%AD%E5%8F%98%E9%87%8F/image-20210408143209167.png">
   
     <link rel="alternative" href="/atom.xml" title="吃冰冰的喵酱" type="application/atom+xml">
   
@@ -278,22 +272,22 @@
             
 
 
-<article id="post-SparkCore多目录输出&amp;累加器&amp;持久化&amp;广播变量" class="article article-type-post " itemscope itemprop="blogPost">
+<article id="post-Hive窗口函数" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
   
   
     <h1 class="article-title" itemprop="name">
-      SparkCore多目录输出&amp;累加器&amp;持久化&amp;广播变量
+      Hive窗口函数
     </h1>
   
 
 
   
   
-<a href="/2019/01/18/SparkCore%E5%A4%9A%E7%9B%AE%E5%BD%95%E8%BE%93%E5%87%BA&%E7%B4%AF%E5%8A%A0%E5%99%A8&%E6%8C%81%E4%B9%85%E5%8C%96&%E5%B9%BF%E6%92%AD%E5%8F%98%E9%87%8F/" class="archive-article-date">
-        <time datetime="2019-01-17T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-18</time>
+<a href="/2019/08/24/Hive%E7%AA%97%E5%8F%A3%E5%87%BD%E6%95%B0/" class="archive-article-date">
+        <time datetime="2019-08-23T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-24</time>
 </a>
 
   
@@ -307,7 +301,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">2.8k字</span>
+      <span class="post-count">2.7k字</span>
     </span>
   </span>
 
@@ -316,7 +310,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">12分</span>
+      <span class="post-count">14分</span>
     </span>
   </span>
 </div>
@@ -333,128 +327,171 @@
 
       
 
-      <p>今天我们来看一下RDD中的累机器、持久化和广播变量</p>
-<p><a target="_blank" rel="noopener" href="http://spark.apache.org/docs/latest/rdd-programming-guide.html">官网链接</a></p>
+      <p>本文主要介绍了 Hive 的窗口分析函数的用法</p>
 <span id="more"></span>
 
-<h2><span id="多目录输出">多目录输出</span></h2><ol>
-<li><p>实现多目录输出自定义类</p>
-<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.hadoop.io.<span class="type">NullWritable</span></span><br><span class="line"><span class="keyword">import</span> org.apache.hadoop.mapred.lib.<span class="type">MultipleTextOutputFormat</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WujidataMultipleTextOutputFormat</span> <span class="keyword">extends</span> <span class="title">MultipleTextOutputFormat</span>[<span class="type">Any</span>,<span class="type">Any</span>]</span>&#123;</span><br><span class="line">   <span class="comment">// 生成文件名</span></span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">def</span> <span class="title">generateFileNameForKeyValue</span></span>(key: <span class="type">Any</span>, value: <span class="type">Any</span>, name: <span class="type">String</span>): <span class="type">String</span> = &#123;</span><br><span class="line">    <span class="string">s&quot;<span class="subst">$key</span>/20281022&quot;</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">def</span> <span class="title">generateActualKey</span></span>(key: <span class="type">Any</span>, value: <span class="type">Any</span>): <span class="type">Any</span> = <span class="type">NullWritable</span>.get()</span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">def</span> <span class="title">generateActualValue</span></span>(key: <span class="type">Any</span>, value: <span class="type">Any</span>): <span class="type">Any</span> = &#123;</span><br><span class="line">    value.asInstanceOf[<span class="type">String</span>]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>主类，使用<code>saveAsHadoopFile</code>方法保存数据，指定参数</p>
-<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]): <span class="type">Unit</span> = &#123;</span><br><span class="line">  <span class="keyword">val</span> sparkConf = <span class="keyword">new</span> <span class="type">SparkConf</span>().setMaster(<span class="string">&quot;local[2]&quot;</span>).setAppName(<span class="keyword">this</span>.getClass.getSimpleName)</span><br><span class="line">  <span class="keyword">val</span> sc = <span class="keyword">new</span> <span class="type">SparkContext</span>(sparkConf)</span><br><span class="line">  <span class="keyword">val</span> out = <span class="string">&quot;out&quot;</span></span><br><span class="line">  <span class="type">FileUtils</span>.delete(sc.hadoopConfiguration, out)</span><br><span class="line">  sc.textFile(<span class="string">&quot;wujidata-spark-core/data/access.txt&quot;</span>,<span class="number">1</span>)</span><br><span class="line">    .map(x =&gt; &#123;</span><br><span class="line">      <span class="keyword">val</span> splits = x.split(<span class="string">&quot;\t&quot;</span>)</span><br><span class="line">      (splits(<span class="number">1</span>), x)</span><br><span class="line">    &#125;).saveAsHadoopFile(out, classOf[<span class="type">String</span>],classOf[<span class="type">String</span>],classOf[<span class="type">WujidataMultipleTextOutputFormat</span>])</span><br><span class="line">  sc.stop()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<h2><span id="什么是窗口函数">什么是窗口函数</span></h2><p>可以把这个概念拆开来看，窗口函数 == 窗口 + 函数</p>
+<p>窗口：函数运行时计算的数据集的范围</p>
+<p>函数：运行的函数</p>
+<h2><span id="窗口函数">窗口函数</span></h2><p><a target="_blank" rel="noopener" href="https://cwiki.apache.org/confluence/display/Hive/LanguageManual+WindowingAndAnalytics">官网链接</a></p>
+<h3><span id="laglead">LAG/LEAD</span></h3><ul>
+<li><p>功能：用于统计窗口内往上/下取第N行的值</p>
+</li>
+<li><p>语法：LEAD(col, n, default)</p>
+<ul>
+<li>col：列名</li>
+<li>n：取第几行，默认是1</li>
+<li>default：取不到时的默认值；如果没有设置且没有取到，就为NULL</li>
+</ul>
+</li>
+<li><p><strong>LAG是向上，LEAD是向下</strong></p>
+</li>
+<li><p>例子</p>
+<ul>
+<li><p>数据：window03.txt</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">cookie1,2015-04-10 10:00:02,ur12</span><br><span class="line">cookie1,2015-04-10 10:00:00,ur11</span><br><span class="line">cookie1,2015-04-10 10:03:04,1ur13</span><br><span class="line">cookie1,2015-04-10 10:50:05,ur16</span><br><span class="line">cookie1,2015-04-10 11:00:00,ur17</span><br><span class="line">cookie1,2015-04-10 10:10:00,ur14</span><br><span class="line">cookie1,2015-04-10 10:50:01,ur15</span><br><span class="line">cookie2,2015-04-10 10:00:02,ur122</span><br><span class="line">cookie2,2015-04-10 10:00:00,ur111</span><br><span class="line">cookie2,2015-04-10 10:03:04,1ur133</span><br><span class="line">cookie2,2015-04-10 10:50:05,ur166</span><br><span class="line">cookie2,2015-04-10 11:00:00,ur177</span><br><span class="line">cookie2,2015-04-10 10:10:00,ur144</span><br><span class="line">cookie2,2015-04-10 10:50:01,ur155</span><br></pre></td></tr></table></figure></li>
+<li><p>建表语句</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> wujidata_window3(</span><br><span class="line">cookie_id string,</span><br><span class="line">`<span class="type">time</span>` string,</span><br><span class="line">url string</span><br><span class="line">) <span class="type">row</span> format delimited fields terminated <span class="keyword">by</span> <span class="string">&#x27;,&#x27;</span>;</span><br></pre></td></tr></table></figure></li>
+<li><p>加载数据</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">load data <span class="keyword">local</span> inpath <span class="string">&#x27;/home/hadoop/data/window/window03.txt&#x27;</span> overwrite <span class="keyword">into</span> <span class="keyword">table</span> wujidata_window3;</span><br></pre></td></tr></table></figure></li>
+<li><p>查询SQL(LAG)</p>
+ <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> cookie_id, `<span class="type">time</span>`, url,</span><br><span class="line"><span class="built_in">LAG</span>(`<span class="type">time</span>`, <span class="number">1</span>, <span class="string">&#x27;1970-01-01 00:00:00&#x27;</span>) <span class="keyword">over</span>(<span class="keyword">partition</span> <span class="keyword">by</span> cookie_id <span class="keyword">order</span> <span class="keyword">by</span> `<span class="type">time</span>`) rn1,</span><br><span class="line"><span class="built_in">LAG</span>(`<span class="type">time</span>`, <span class="number">2</span>) <span class="keyword">over</span>(<span class="keyword">partition</span> <span class="keyword">by</span> cookie_id <span class="keyword">order</span> <span class="keyword">by</span> `<span class="type">time</span>`) rn2,</span><br><span class="line"><span class="built_in">LAG</span>(`<span class="type">time</span>`) <span class="keyword">over</span>(<span class="keyword">partition</span> <span class="keyword">by</span> cookie_id <span class="keyword">order</span> <span class="keyword">by</span> `<span class="type">time</span>`) rn3</span><br><span class="line"><span class="keyword">from</span> wujidata_window3;</span><br></pre></td></tr></table></figure></li>
 <li><p>结果</p>
-<p><img src="/2019/01/18/SparkCore%E5%A4%9A%E7%9B%AE%E5%BD%95%E8%BE%93%E5%87%BA&%E7%B4%AF%E5%8A%A0%E5%99%A8&%E6%8C%81%E4%B9%85%E5%8C%96&%E5%B9%BF%E6%92%AD%E5%8F%98%E9%87%8F/image-20210408143209167.png" alt="image-20210408143209167"></p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">time		url     rn1			rn2			rn3</span><br><span class="line">10:00:00	ur11	00:00:00	NULL		NULL</span><br><span class="line">10:00:02	ur12	10:00:00	NULL		10:00:00</span><br><span class="line">10:03:04	1ur13   10:00:02	10:00:00	10:00:02</span><br><span class="line">10:10:00	ur14    10:03:04	10:00:02	10:03:04</span><br><span class="line">10:50:01	ur15    10:10:00	10:03:04	10:10:00</span><br><span class="line">10:50:05	ur16    10:50:01	10:10:00	10:50:01</span><br><span class="line">11:00:00	ur17    10:50:05	10:50:01	10:50:05</span><br></pre></td></tr></table></figure>
+
+<p> 说明</p>
+<p> rn1：向上取第一行，取不到就取1970-01-01 00:00:00</p>
+<p> rn2：向上取第二行，取不到就为NULL</p>
+<p> rn3：向上取第一行，取不到就为NULL</p>
 </li>
-</ol>
-<h2><span id="计数器">计数器</span></h2><h3><span id="为什么要定义计数器">为什么要定义计数器？</span></h3><p>在Spark应用程序中，我们经常会有这样的需求，如异常监控、调试、记录符合某特性的数据的数目，这种需求都需要用到计数器，如果一个变量不被声明为一个累加器，那么它将在被改变时不会再driver端进行全局汇总，即在分布式运行时每个task运行的只是原始变量的一个副本，并不能改变原始变量的值，但是当这个变量被声明为累加器后，该变量就会有分布式计数的功能。</p>
-<h3><span id="图解计数器">图解计数器</span></h3><p>错误的图解</p>
-<p><img src="/2019/01/18/SparkCore%E5%A4%9A%E7%9B%AE%E5%BD%95%E8%BE%93%E5%87%BA&%E7%B4%AF%E5%8A%A0%E5%99%A8&%E6%8C%81%E4%B9%85%E5%8C%96&%E5%B9%BF%E6%92%AD%E5%8F%98%E9%87%8F/%E7%B4%AF%E5%8A%A0%E5%99%A8%E9%94%99%E8%AF%AF%E7%9A%84%E5%9B%BE%E8%A7%A3.png" alt="累加器错误的图解"></p>
-<p>正确的图解</p>
-<p><img src="/2019/01/18/SparkCore%E5%A4%9A%E7%9B%AE%E5%BD%95%E8%BE%93%E5%87%BA&%E7%B4%AF%E5%8A%A0%E5%99%A8&%E6%8C%81%E4%B9%85%E5%8C%96&%E5%B9%BF%E6%92%AD%E5%8F%98%E9%87%8F/%E7%B4%AF%E5%8A%A0%E5%99%A8%E6%AD%A3%E7%A1%AE%E7%9A%84%E5%9B%BE%E8%A7%A3.png" alt="累加器正确的图解"></p>
-<p>计数器种类很多，但是经常用的就是两种，<code>longAccumulator</code>和<code>collectionAccumulator</code></p>
-<p><strong>需要注意的是计数器是lazy的，只有触发action才会进行计数，在不持久化的情况下重复触发action，计数器会重复累加</strong></p>
-<h3><span id="longaccumulator">LongAccumulator</span></h3><p>Accumulators 是只能通过associative和commutative操作“added”的变量，因此可以有效地并行支持。它们可用于实现计数器(如MapReduce)和Spark本身支持数字类型的累加器，程序员还<strong>可以添加对新类型的支持</strong>。</p>
-<p><code>longAccumulator</code>通过累加的方式计数</p>
-<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">AccumulatorsApp</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]): <span class="type">Unit</span> = &#123;</span><br><span class="line">    <span class="keyword">val</span> sc = <span class="type">ContextUtils</span>.getSparkContext(<span class="keyword">this</span>.getClass.getSimpleName)</span><br><span class="line">    <span class="keyword">val</span> data = sc.parallelize(<span class="type">Array</span>((<span class="string">&quot;冰冰&quot;</span>,<span class="number">30</span>), (<span class="string">&quot;扬扬&quot;</span>, <span class="number">33</span>), (<span class="string">&quot;莹莹&quot;</span>, <span class="number">25</span>), (<span class="string">&quot;芸芸&quot;</span>, <span class="number">16</span>)))</span><br><span class="line">    <span class="keyword">val</span> acc = sc.longAccumulator(<span class="string">&quot;已成年的人数&quot;</span>)</span><br><span class="line">    <span class="keyword">val</span> data2 = data.map(x =&gt; &#123;</span><br><span class="line">      <span class="keyword">if</span> (x._2 &gt; <span class="number">18</span>) &#123;</span><br><span class="line">        <span class="comment">// 计数器做累加</span></span><br><span class="line">        acc.add(<span class="number">1</span>L)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="comment">// action操作</span></span><br><span class="line">    data2.collect()</span><br><span class="line">    println(acc.value) <span class="comment">// 3</span></span><br><span class="line">    sc.stop()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>使用<code>longAccumulator</code>做计数的时候要小心重复执行action导致的acc.value的变化</p>
-<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]): <span class="type">Unit</span> = &#123;</span><br><span class="line">    <span class="keyword">val</span> sc = <span class="type">ContextUtils</span>.getSparkContext(<span class="keyword">this</span>.getClass.getSimpleName)</span><br><span class="line">    <span class="keyword">val</span> data = sc.parallelize(<span class="type">Array</span>((<span class="string">&quot;冰冰&quot;</span>,<span class="number">30</span>), (<span class="string">&quot;扬扬&quot;</span>, <span class="number">33</span>), (<span class="string">&quot;莹莹&quot;</span>, <span class="number">25</span>), (<span class="string">&quot;芸芸&quot;</span>, <span class="number">16</span>)))</span><br><span class="line">    <span class="keyword">val</span> acc = sc.longAccumulator(<span class="string">&quot;已成年的人数&quot;</span>)</span><br><span class="line">    <span class="keyword">val</span> data2 = data.map(x =&gt; &#123;</span><br><span class="line">      <span class="keyword">if</span> (x._2 &gt; <span class="number">18</span>) &#123;</span><br><span class="line">        <span class="comment">// 计数器做累加</span></span><br><span class="line">        acc.add(<span class="number">1</span>L)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="comment">// action操作</span></span><br><span class="line">    data2.collect()</span><br><span class="line">    println(acc.value) <span class="comment">// 3</span></span><br><span class="line">    data2.collect()</span><br><span class="line">    println(acc.value) <span class="comment">// 6</span></span><br><span class="line">    sc.stop()</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-
-<p>由于重复执行了collect()，累加器的数量成倍增长，解决这种错误累加也很简单，就是在collect()之前调用RDD的cache方法(或persist)，这样在collect()后数据集就会被缓存下来，reduce操作就会读取缓存的数据集，而无需从头开始计算。</p>
-<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">data2.cache().collect()</span><br><span class="line">println(acc.value) <span class="comment">// 3</span></span><br><span class="line">data2.collect()</span><br><span class="line">println(acc.value) <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
-
-<h3><span id="collectionaccumulator">CollectionAccumulator</span></h3><p><code>collectionAccumulator</code>，集合计数器，计数器中保存的是集合元素，通过泛型指定。</p>
-<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 需求：id后三位相同的加入计数器</span></span><br><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">AccumulatorsApp</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]): <span class="type">Unit</span> = &#123;</span><br><span class="line">    <span class="keyword">val</span> user = <span class="type">Array</span>(</span><br><span class="line">      <span class="type">User</span>(<span class="string">&quot;冰冰&quot;</span>, <span class="string">&quot;8000000&quot;</span>),</span><br><span class="line">      <span class="type">User</span>(<span class="string">&quot;扬扬&quot;</span>, <span class="string">&quot;8000001&quot;</span>),</span><br><span class="line">      <span class="type">User</span>(<span class="string">&quot;莹莹&quot;</span>, <span class="string">&quot;8000222&quot;</span>),</span><br><span class="line">      <span class="type">User</span>(<span class="string">&quot;芸芸&quot;</span>, <span class="string">&quot;8000003&quot;</span>)</span><br><span class="line">    )</span><br><span class="line">    <span class="keyword">val</span> rdd = sc.parallelize(user)</span><br><span class="line">    <span class="keyword">val</span> acc = sc.collectionAccumulator[<span class="type">User</span>](<span class="string">&quot;like&quot;</span>)</span><br><span class="line">    rdd.foreach(user =&gt; &#123;</span><br><span class="line">      <span class="keyword">val</span> tmp = user.id.reverse</span><br><span class="line">      <span class="keyword">if</span>(tmp(<span class="number">0</span>) == tmp(<span class="number">1</span>) &amp;&amp; tmp(<span class="number">0</span>) == tmp(<span class="number">2</span>))&#123;</span><br><span class="line">        acc.add(user)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    println(acc.value)</span><br><span class="line">    sc.stop()</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">case</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span>(<span class="params">name: <span class="type">String</span>, id: <span class="type">String</span></span>)</span></span><br><span class="line"><span class="class">&#125;</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>注意事项：</strong></p>
-<ol>
-<li>计数器在Driver端定义并赋初始值，计数器只能在Driver端读取最后的值，在Excutor端更新。</li>
-<li>计数器不是一个调优的操作，因为如果不这样做，结果是错的。</li>
-</ol>
-<h2><span id="持久化">持久化</span></h2><p>Spark中最重要的功能之一是跨操作在内存中持久化数据集。持久化一个RDD时，每个节点在内存中存储它计算的任何分区，并在该数据集(或从中派生的数据集)的其他操作中重构它们。这使得将来的操作要快得多(通常超过10倍)。缓存是迭代算法和快速交互使用的关键工具。</p>
-<p>可以使用其上的<code>persist()</code>或<code>cache()</code>方法将RDD标记为持久的。第一次在操作中计算它时，它将保存在节点的内存中。Spark的缓存是容错的——如果一个RDD的任何分区丢失了，它将使用最初创建它的转换自动重新计算。</p>
-<p>持久化的存储级别很多，常用的是MEMORY_ONLY、MEMORY_ONLY_SER、MEMORY_AND_DISK</p>
-<table>
-<thead>
-<tr>
-<th>Storage Level</th>
-<th>Meaning</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>MEMORY_ONLY</td>
-<td>将RDD作为反序列化的Java对象存储在JVM中。如果RDD不能容纳在内存中，则某些分区将不会被缓存，并且每次需要时都会即时重新计算。这是默认级别。</td>
-</tr>
-<tr>
-<td>MEMORY_AND_DISK</td>
-<td>将RDD作为反序列化的Java对象存储在JVM中。如果RDD不适合内存，那么将不适合的分区存储在磁盘上，并在需要时从那里读取它们。</td>
-</tr>
-<tr>
-<td>MEMORY_ONLY_SER (Java and Scala)</td>
-<td>将RDD存储为序列化的Java对象(每个分区一个字节数组)。这通常比反序列化对象更节省空间，特别是在使用快速序列化器时，但读取时需要更多cpu。</td>
-</tr>
-</tbody></table>
-<h3><span id="如何选择它们"><strong>如何选择它们？</strong></span></h3><p>Storage Level的选择是内存和CPU的权衡</p>
-<ol>
-<li>内存多：MEMORY_ONLY (不进行序列化)</li>
-<li>CPU跟的上：MEMORY_ONLY_SER (进行了序列化，推荐)</li>
-<li>不建议写Disk</li>
-</ol>
-<p>使用<code>cache()</code>和<code>persist()</code>进行持久化操作，它们都是<strong>lazy</strong>的，需要action才能触发，默认使用<strong>MEMORY_ONLY</strong>，<code>cache()</code>底层调用的是<code>persist()</code></p>
-<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Persist this RDD with the default storage level (`MEMORY_ONLY`).</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cache</span></span>(): <span class="keyword">this</span>.<span class="keyword">type</span> = persist()</span><br></pre></td></tr></table></figure>
-
-<p>结果可以在Web UI的<strong>Storage</strong>中查看</p>
-<p>如果需要<strong>清除缓存</strong>，使用<code>unpersist()</code>，清除缓存数据是立即执行的</p>
-<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; rdd.unpersist()</span><br></pre></td></tr></table></figure>
-
-<p><strong>怎么修改存储级别？</strong></p>
-<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rdd.map(x =&gt; &#123;</span><br><span class="line">  <span class="comment">//计数器做累加</span></span><br><span class="line">  acc.add(<span class="number">1</span>L)</span><br><span class="line">&#125;).persist(<span class="type">StorageLevel</span>.<span class="type">MEMORY_ONLY_SER</span>).count()</span><br></pre></td></tr></table></figure>
-
-<p>StorageLevel是个object，需要的级别都可以从里面拿出来</p>
-<h4><span id="cache和persist有什么区别"><strong>cache和persist有什么区别？</strong></span></h4><ul>
-<li><code>cache</code>调用的<code>persist</code>，<code>persist</code>调用的<code>persist(StorageLevel.MEMORY_ONLY)</code></li>
-</ul>
-<h4><span id="序列化和非序列化有什么区别"><strong>序列化和非序列化有什么区别？</strong></span></h4><ul>
-<li>序列化将对象转换成字节数组了，节省空间，占CPU</li>
-</ul>
-<h4><span id="sparkcore中的cache和sparksql中的cache有什么区别"><strong>SparkCore中的cache和SparkSQL中的cache有什么区别？</strong></span></h4><ul>
-<li><p>RDD的cache是lazy的，DS的cache是eager的</p>
-</li>
-<li><p>缓存级别默认不一样</p>
-<p>RDD的cache：<code>MEMORY_ONLY</code></p>
-<p>DF/DS的cache：<code>MEMORY_AND_DISK</code></p>
-</li>
-</ul>
-<h2><span id="广播变量">广播变量</span></h2><h3><span id="为什么要将变量定义成广播变量">为什么要将变量定义成广播变量？</span></h3><p>如果我们要在分布式计算里面分发大对象，例如：<em>字典</em>，<em>集合</em>，<em>黑白名单</em>等，这个都会由Driver端进行分发，一般来讲，如果这个变量不是广播变量，那么每个task就会分发一份，这在<strong>task数目非常多的情况下Driver的带宽会成为系统的瓶颈，而且会大量消耗task服务器上的资源</strong>，如果将这个变量声明为广播变量，那么只是每个executor拥有一份，这个executor启动的task会共享这个变量，节省了通信的成本和服务器的资源。</p>
-<h3><span id="广播变量图解">广播变量图解</span></h3><p>错误的，不使用广播变量</p>
-<p><img src="/2019/01/18/SparkCore%E5%A4%9A%E7%9B%AE%E5%BD%95%E8%BE%93%E5%87%BA&%E7%B4%AF%E5%8A%A0%E5%99%A8&%E6%8C%81%E4%B9%85%E5%8C%96&%E5%B9%BF%E6%92%AD%E5%8F%98%E9%87%8F/%E4%B8%8D%E4%BD%BF%E7%94%A8%E5%B9%BF%E6%92%AD%E5%8F%98%E9%87%8F.png" alt="不使用广播变量"></p>
-<p>正确的，使用广播变量的情况</p>
-<p><img src="/2019/01/18/SparkCore%E5%A4%9A%E7%9B%AE%E5%BD%95%E8%BE%93%E5%87%BA&%E7%B4%AF%E5%8A%A0%E5%99%A8&%E6%8C%81%E4%B9%85%E5%8C%96&%E5%B9%BF%E6%92%AD%E5%8F%98%E9%87%8F/%E4%BD%BF%E7%94%A8%E5%B9%BF%E6%92%AD%E5%8F%98%E9%87%8F.png" alt="使用广播变量"></p>
-<h3><span id="小表广播案例">小表广播案例</span></h3><p>使用广播变量的场景很多， 我们都知道Spark 一种常见的优化方式就是小表广播， 使用 map join 来代替 reduce join， 我们通过把小的数据集广播到各个节点上，节省了一次特别 expensive 的 shuffle 操作。</p>
-<p>比如driver 上有一张数据量很小的表， 其他节点上的task 都需要 lookup 这张表， 那么 driver 可以先把这张表 copy 到这些节点，这样 task 就可以在本地查表了。</p>
-<ol>
-<li><p>Fact table 航线(起点机场, 终点机场, 航空公司, 起飞时间)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SEA,JFK,DL,7:00</span><br><span class="line">SFO,LAX,AA,7:05</span><br><span class="line">SFO,JFK,VX,7:05</span><br><span class="line">JFK,LAX,DL,7:10</span><br><span class="line">LAX,SEA,DL,7:10</span><br></pre></td></tr></table></figure></li>
-<li><p>Dimension table 机场(简称, 全称, 城市, 所处城市简称)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">JFK,John F. Kennedy International Airport,New York,NY</span><br><span class="line">LAX,Los Angeles International Airport,Los Angeles,CA</span><br><span class="line">SEA,Seattle-Tacoma International Airport,Seattle,WA</span><br><span class="line">SFO,San Francisco International Airport,San Francisco,CA</span><br></pre></td></tr></table></figure></li>
-<li><p>Dimension table 航空公司(简称,全称)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">AA,American Airlines</span><br><span class="line">DL,Delta Airlines</span><br><span class="line">VX,Virgin America</span><br></pre></td></tr></table></figure></li>
-<li><p>思路：将机场维度表和航空公司维度表进行广播，生成Map，航线事实表从广播变量中通过key拿到value(计算在每个executor上)</p>
-</li>
-<li><p>代码</p>
-<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">BroadcastApp</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]): <span class="type">Unit</span> = &#123;</span><br><span class="line">    <span class="keyword">val</span> conf = <span class="keyword">new</span> <span class="type">SparkConf</span>().setAppName(<span class="string">&quot;BroadcastApp&quot;</span>).setMaster(<span class="string">&quot;local[2]&quot;</span>)</span><br><span class="line">    <span class="keyword">val</span> sc = <span class="keyword">new</span> <span class="type">SparkContext</span>(conf)</span><br><span class="line">    <span class="comment">// Fact table  航线(起点机场, 终点机场, 航空公司, 起飞时间)</span></span><br><span class="line">    <span class="keyword">val</span> flights = sc.parallelize(<span class="type">List</span>(</span><br><span class="line">      (<span class="string">&quot;SEA&quot;</span>, <span class="string">&quot;JFK&quot;</span>, <span class="string">&quot;DL&quot;</span>,  <span class="string">&quot;7:00&quot;</span>),</span><br><span class="line">      (<span class="string">&quot;SFO&quot;</span>, <span class="string">&quot;LAX&quot;</span>, <span class="string">&quot;AA&quot;</span>,  <span class="string">&quot;7:05&quot;</span>),</span><br><span class="line">      (<span class="string">&quot;SFO&quot;</span>, <span class="string">&quot;JFK&quot;</span>, <span class="string">&quot;VX&quot;</span>, <span class="string">&quot;7:05&quot;</span>),</span><br><span class="line">      (<span class="string">&quot;JFK&quot;</span>, <span class="string">&quot;LAX&quot;</span>, <span class="string">&quot;DL&quot;</span>, <span class="string">&quot;7:10&quot;</span>),</span><br><span class="line">      (<span class="string">&quot;LAX&quot;</span>, <span class="string">&quot;SEA&quot;</span>, <span class="string">&quot;DL&quot;</span>,  <span class="string">&quot;7:10&quot;</span>)))</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Dimension table 机场(简称, 全称, 城市, 所处城市简称)</span></span><br><span class="line">    <span class="keyword">val</span> airports = sc.parallelize(<span class="type">List</span>(</span><br><span class="line">      (<span class="string">&quot;JFK&quot;</span>, <span class="string">&quot;John F. Kennedy International Airport&quot;</span>, <span class="string">&quot;New York&quot;</span>, <span class="string">&quot;NY&quot;</span>),</span><br><span class="line">      (<span class="string">&quot;LAX&quot;</span>, <span class="string">&quot;Los Angeles International Airport&quot;</span>, <span class="string">&quot;Los Angeles&quot;</span>, <span class="string">&quot;CA&quot;</span>),</span><br><span class="line">      (<span class="string">&quot;SEA&quot;</span>, <span class="string">&quot;Seattle-Tacoma International Airport&quot;</span>, <span class="string">&quot;Seattle&quot;</span>, <span class="string">&quot;WA&quot;</span>),</span><br><span class="line">      (<span class="string">&quot;SFO&quot;</span>, <span class="string">&quot;San Francisco International Airport&quot;</span>, <span class="string">&quot;San Francisco&quot;</span>, <span class="string">&quot;CA&quot;</span>)))</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Dimension table  航空公司(简称,全称)</span></span><br><span class="line">    <span class="keyword">val</span> airlines = sc.parallelize(<span class="type">List</span>(</span><br><span class="line">      (<span class="string">&quot;AA&quot;</span>, <span class="string">&quot;American Airlines&quot;</span>),</span><br><span class="line">      (<span class="string">&quot;DL&quot;</span>, <span class="string">&quot;Delta Airlines&quot;</span>),</span><br><span class="line">      (<span class="string">&quot;VX&quot;</span>, <span class="string">&quot;Virgin America&quot;</span>)))</span><br><span class="line"></span><br><span class="line">    <span class="comment">//最终统计结果：</span></span><br><span class="line">    <span class="comment">//出发城市           终点城市           航空公司名称         起飞时间</span></span><br><span class="line">    <span class="comment">//Seattle           New York       Delta Airlines           7:00</span></span><br><span class="line">    <span class="comment">//San Francisco     Los Angeles    American Airlines       7:05</span></span><br><span class="line">    <span class="comment">//San Francisco     New York       Virgin America            7:05</span></span><br><span class="line">    <span class="comment">//New York          Los Angeles    Delta Airlines           7:10</span></span><br><span class="line">    <span class="comment">//Los Angeles       Seattle        Delta Airlines          7:10</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">val</span> airportsBc = sc.broadcast(airports.map(x =&gt; (x._1, x._3)).collectAsMap())</span><br><span class="line">    <span class="keyword">val</span> airlinesBc = sc.broadcast(airlines.collectAsMap())</span><br><span class="line">    flights.map&#123;</span><br><span class="line">      <span class="keyword">case</span> (a,b,c,d) =&gt; (airportsBc.value(a),</span><br><span class="line">        airportsBc.value(b),</span><br><span class="line">        airlinesBc.value(c),</span><br><span class="line">        d</span><br><span class="line">        )</span><br><span class="line">    &#125;.foreach(println)</span><br><span class="line">    sc.stop()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>查询SQL(LEAD)</p>
+ <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> cookie_id, `<span class="type">time</span>`, url,</span><br><span class="line"><span class="built_in">LEAD</span>(`<span class="type">time</span>`, <span class="number">1</span>, <span class="string">&#x27;1970-01-01 00:00:00&#x27;</span>) <span class="keyword">over</span>(<span class="keyword">partition</span> <span class="keyword">by</span> cookie_id <span class="keyword">order</span> <span class="keyword">by</span> `<span class="type">time</span>`) rn1,</span><br><span class="line"><span class="built_in">LEAD</span>(`<span class="type">time</span>`, <span class="number">2</span>) <span class="keyword">over</span>(<span class="keyword">partition</span> <span class="keyword">by</span> cookie_id <span class="keyword">order</span> <span class="keyword">by</span> `<span class="type">time</span>`) rn2,</span><br><span class="line"><span class="built_in">LEAD</span>(`<span class="type">time</span>`) <span class="keyword">over</span>(<span class="keyword">partition</span> <span class="keyword">by</span> cookie_id <span class="keyword">order</span> <span class="keyword">by</span> `<span class="type">time</span>`) rn3</span><br><span class="line"><span class="keyword">from</span> wujidata_window3;</span><br></pre></td></tr></table></figure></li>
 <li><p>结果</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(Seattle,New York,Delta Airlines,7:00)</span><br><span class="line">(San Francisco,New York,Virgin America,7:05)</span><br><span class="line">(San Francisco,Los Angeles,American Airlines,7:05)</span><br><span class="line">(New York,Los Angeles,Delta Airlines,7:10)</span><br><span class="line">(Los Angeles,Seattle,Delta Airlines,7:10)</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h3><span id="为什么只能-broadcast-只读的变量">为什么只能 broadcast 只读的变量</span></h3><p>这就涉及一致性的问题，如果变量可以被更新，那么一旦变量被某个节点更新，其他节点要不要一块更新？如果多个节点同时在更新，更新顺序是什么？怎么做同步？ 仔细想一下， 每个都很头疼， spark 目前就索性搞成了只读的。 </p>
-<h3><span id="注意事项">注意事项</span></h3><ol>
-<li>变量一旦被定义为一个广播变量，那么这个变量只能读，不能修改</li>
-<li>能不能将一个RDD使用广播变量广播出去？因为RDD是不存储数据的。<strong>可以将RDD的结果广播出去。</strong></li>
-<li>广播变量只能在Driver端定义，<strong>不能在Executor端定义。</strong></li>
-<li>在Driver端可以修改广播变量的值，<strong>在Executor端无法修改广播变量的值。</strong></li>
-<li>如果executor端用到了Driver的变量，<strong>不使用广播变量在Executor有多少task就有多少Driver端的变量副本。</strong></li>
-<li>如果Executor端用到了Driver的变量，<strong>使用广播变量在每个Executor中只有一份Driver端的变量副本。</strong></li>
-</ol>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">time    				url     rn1     				rn2     				rn3</span><br><span class="line">2015-04-10 10:00:00     ur11    2015-04-10 10:00:02     2015-04-10 10:03:04     2015-04-10 10:00:02</span><br><span class="line">2015-04-10 10:00:02     ur12    2015-04-10 10:03:04     2015-04-10 10:10:00     2015-04-10 10:03:04</span><br><span class="line">2015-04-10 10:03:04     1ur13   2015-04-10 10:10:00     2015-04-10 10:50:01     2015-04-10 10:10:00</span><br><span class="line">2015-04-10 10:10:00     ur14    2015-04-10 10:50:01     2015-04-10 10:50:05     2015-04-10 10:50:01</span><br><span class="line">2015-04-10 10:50:01     ur15    2015-04-10 10:50:05     2015-04-10 11:00:00     2015-04-10 10:50:05</span><br><span class="line">2015-04-10 10:50:05     ur16    2015-04-10 11:00:00     NULL    				2015-04-10 11:00:00</span><br><span class="line">2015-04-10 11:00:00     ur17    1970-01-01 00:00:00     NULL    				NULL</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h3><span id="first_value">FIRST_VALUE</span></h3><ul>
+<li><p>功能：取分组内排序后，截止到当前行，第一个值</p>
+</li>
+<li><p>语法：FIRST_VALUE(col)</p>
+</li>
+<li><p>测试</p>
+<ul>
+<li><p>数据与表同上</p>
+</li>
+<li><p>SQL语句</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> cookie_id, `<span class="type">time</span>`, url,</span><br><span class="line"><span class="built_in">row_number</span>() <span class="keyword">over</span>(<span class="keyword">partition</span> <span class="keyword">by</span> cookie_id <span class="keyword">order</span> <span class="keyword">by</span> `<span class="type">time</span>`) <span class="keyword">as</span> rn,</span><br><span class="line"><span class="built_in">FIRST_VALUE</span>(url) <span class="keyword">over</span>(<span class="keyword">partition</span> <span class="keyword">by</span> cookie_id <span class="keyword">order</span> <span class="keyword">by</span> `<span class="type">time</span>`) <span class="keyword">as</span> first1 </span><br><span class="line"><span class="keyword">from</span> wujidata_window3;</span><br></pre></td></tr></table></figure></li>
+<li><p>结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">cookie_id       time    				url     rn      first1</span><br><span class="line">cookie1 		2015-04-10 10:00:00     ur11    1       ur11</span><br><span class="line">cookie1 		2015-04-10 10:00:02     ur12    2       ur11</span><br><span class="line">cookie1 		2015-04-10 10:03:04     1ur13   3       ur11</span><br><span class="line">cookie1 		2015-04-10 10:10:00     ur14    4       ur11</span><br><span class="line">cookie1 		2015-04-10 10:50:01     ur15    5       ur11</span><br><span class="line">cookie1 		2015-04-10 10:50:05     ur16    6       ur11</span><br><span class="line">cookie1 		2015-04-10 11:00:00     ur17    7       ur11</span><br><span class="line">cookie2 		2015-04-10 10:00:00     ur111   1       ur111</span><br><span class="line">cookie2 		2015-04-10 10:00:02     ur122   2       ur111</span><br><span class="line">cookie2 		2015-04-10 10:03:04     1ur133  3       ur111</span><br><span class="line">cookie2 		2015-04-10 10:10:00     ur144   4       ur111</span><br><span class="line">cookie2 		2015-04-10 10:50:01     ur155   5       ur111</span><br><span class="line">cookie2 		2015-04-10 10:50:05     ur166   6       ur111</span><br><span class="line">cookie2 		2015-04-10 11:00:00     ur177   7       ur111</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h3><span id="last_value">LAST_VALUE</span></h3><ul>
+<li><p>功能：取分组内排序后，截止到当前行，最后一个值</p>
+</li>
+<li><p>语法：LAST_VALUE(col)</p>
+</li>
+<li><p>测试</p>
+<ul>
+<li><p>SQL语句</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> cookie_id, `<span class="type">time</span>`, url,</span><br><span class="line"><span class="built_in">row_number</span>() <span class="keyword">over</span>(<span class="keyword">partition</span> <span class="keyword">by</span> cookie_id <span class="keyword">order</span> <span class="keyword">by</span> `<span class="type">time</span>`) <span class="keyword">as</span> rn,</span><br><span class="line"><span class="built_in">LAST_VALUE</span>(url) <span class="keyword">over</span>(<span class="keyword">partition</span> <span class="keyword">by</span> cookie_id <span class="keyword">order</span> <span class="keyword">by</span> `<span class="type">time</span>`) <span class="keyword">as</span> last1 </span><br><span class="line"><span class="keyword">from</span> wujidata_window3;</span><br></pre></td></tr></table></figure></li>
+<li><p>结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">cookie_id       time    				url     rn      last1</span><br><span class="line">cookie1			2015-04-10 10:00:00     ur11    1       ur11</span><br><span class="line">cookie1			2015-04-10 10:00:02     ur12    2       ur12</span><br><span class="line">cookie1         2015-04-10 10:03:04     1ur13   3       1ur13</span><br><span class="line">cookie1 		2015-04-10 10:10:00     ur14    4       ur14</span><br><span class="line">cookie1 		2015-04-10 10:50:01     ur15    5       ur15</span><br><span class="line">cookie1 		2015-04-10 10:50:05     ur16    6       ur16</span><br><span class="line">cookie1 		2015-04-10 11:00:00     ur17    7       ur17</span><br><span class="line">cookie2 		2015-04-10 10:00:00     ur111   1       ur111</span><br><span class="line">cookie2 		2015-04-10 10:00:02     ur122   2       ur122</span><br><span class="line">cookie2 		2015-04-10 10:03:04     1ur133  3       1ur133</span><br><span class="line">cookie2 		2015-04-10 10:10:00     ur144   4       ur144</span><br><span class="line">cookie2 		2015-04-10 10:50:01     ur155   5       ur155</span><br><span class="line">cookie2 		2015-04-10 10:50:05     ur166   6       ur166</span><br><span class="line">cookie2 		2015-04-10 11:00:00     ur177   7       ur177</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>拓展</p>
+<p>如果想要取分组内排序后最后一个值，则需要变通一下</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> cookie_id, `<span class="type">time</span>`, url,</span><br><span class="line"><span class="built_in">row_number</span>() <span class="keyword">over</span>(<span class="keyword">partition</span> <span class="keyword">by</span> cookie_id <span class="keyword">order</span> <span class="keyword">by</span> `<span class="type">time</span>`) <span class="keyword">as</span> rn,</span><br><span class="line"><span class="built_in">LAST_VALUE</span>(url) <span class="keyword">over</span>(<span class="keyword">partition</span> <span class="keyword">by</span> cookie_id <span class="keyword">order</span> <span class="keyword">by</span> `<span class="type">time</span>`) <span class="keyword">as</span> last1,</span><br><span class="line"><span class="built_in">FIRST_VALUE</span>(url) <span class="keyword">over</span>(<span class="keyword">partition</span> <span class="keyword">by</span> cookie_id <span class="keyword">order</span> <span class="keyword">by</span> `<span class="type">time</span>` <span class="keyword">desc</span>) <span class="keyword">as</span> last2 </span><br><span class="line"><span class="keyword">from</span> wujidata_window3</span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> cookie_id, `<span class="type">time</span>`;</span><br></pre></td></tr></table></figure>
+
+<p>结果数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">cookie_id       time    				url     rn      last1   last2</span><br><span class="line">cookie1 		2015-04-10 10:00:00     ur11    1       ur11    ur17</span><br><span class="line">cookie1 		2015-04-10 10:00:02     ur12    2       ur12    ur17</span><br><span class="line">cookie1 		2015-04-10 10:03:04     1ur13   3       1ur13   ur17</span><br><span class="line">cookie1 		2015-04-10 10:10:00     ur14    4       ur14    ur17</span><br><span class="line">cookie1 		2015-04-10 10:50:01     ur15    5       ur15    ur17</span><br><span class="line">cookie1 		2015-04-10 10:50:05     ur16    6       ur16    ur17</span><br><span class="line">cookie1 		2015-04-10 11:00:00     ur17    7       ur17    ur17</span><br><span class="line">cookie2 		2015-04-10 10:00:00     ur111   1       ur111   ur177</span><br><span class="line">cookie2 		2015-04-10 10:00:02     ur122   2       ur122   ur177</span><br><span class="line">cookie2 		2015-04-10 10:03:04     1ur133  3       1ur133  ur177</span><br><span class="line">cookie2 		2015-04-10 10:10:00     ur144   4       ur144   ur177</span><br><span class="line">cookie2 		2015-04-10 10:50:01     ur155   5       ur155   ur177</span><br><span class="line">cookie2 		2015-04-10 10:50:05     ur166   6       ur166   ur177</span><br><span class="line">cookie2 		2015-04-10 11:00:00     ur177   7       ur177   ur177</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2><span id="over子句">over子句</span></h2><p>COUNT、SUM、MIN、MAX、AVG</p>
+<p>以 SUM 为例</p>
+<ul>
+<li><p>数据准备：window01.txt</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">wujidata,2019-04-10,1</span><br><span class="line">wujidata,2019-04-11,5</span><br><span class="line">wujidata,2019-04-12,7</span><br><span class="line">wujidata,2019-04-13,3</span><br><span class="line">wujidata,2019-04-14,2</span><br><span class="line">wujidata,2019-04-15,4</span><br><span class="line">wujidata,2019-04-16,4</span><br></pre></td></tr></table></figure></li>
+<li><p>建表语句</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> wujidata_window(</span><br><span class="line">domain string,</span><br><span class="line">`<span class="type">time</span>` string,</span><br><span class="line">traffic <span class="type">int</span></span><br><span class="line">) <span class="type">row</span> format delimited fields terminated <span class="keyword">by</span> <span class="string">&#x27;,&#x27;</span>;</span><br></pre></td></tr></table></figure></li>
+<li><p>加载数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">load data local inpath &#39;&#x2F;home&#x2F;hadoop&#x2F;data&#x2F;window&#x2F;window01.txt&#39; overwrite into table wujidata_window;</span><br></pre></td></tr></table></figure></li>
+<li><p>SQL语句</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> domain,`<span class="type">time</span>`,traffic,</span><br><span class="line"><span class="built_in">sum</span>(traffic) <span class="keyword">OVER</span> (<span class="keyword">PARTITION</span> <span class="keyword">BY</span> domain <span class="keyword">order</span> <span class="keyword">by</span> `<span class="type">time</span>`) pv1,</span><br><span class="line"><span class="built_in">sum</span>(traffic) <span class="keyword">OVER</span> (<span class="keyword">PARTITION</span> <span class="keyword">BY</span> domain <span class="keyword">order</span> <span class="keyword">by</span> `<span class="type">time</span>` <span class="keyword">ROWS</span> <span class="keyword">BETWEEN</span> UNBOUNDED PRECEDING <span class="keyword">AND</span> <span class="keyword">CURRENT</span> <span class="type">ROW</span>) pv2,</span><br><span class="line"><span class="built_in">sum</span>(traffic) <span class="keyword">OVER</span> (<span class="keyword">PARTITION</span> <span class="keyword">BY</span> domain <span class="keyword">order</span> <span class="keyword">by</span> `<span class="type">time</span>` <span class="keyword">ROWS</span> <span class="keyword">BETWEEN</span> <span class="number">3</span> PRECEDING <span class="keyword">AND</span> <span class="keyword">CURRENT</span> <span class="type">ROW</span>) pv3,</span><br><span class="line"><span class="built_in">sum</span>(traffic) <span class="keyword">OVER</span> (<span class="keyword">PARTITION</span> <span class="keyword">BY</span> domain <span class="keyword">order</span> <span class="keyword">by</span> `<span class="type">time</span>` <span class="keyword">ROWS</span> <span class="keyword">BETWEEN</span> <span class="number">3</span> PRECEDING <span class="keyword">AND</span> <span class="number">1</span> FOLLOWING) pv4,</span><br><span class="line"><span class="built_in">sum</span>(traffic) <span class="keyword">OVER</span> (<span class="keyword">PARTITION</span> <span class="keyword">BY</span> domain <span class="keyword">order</span> <span class="keyword">by</span> `<span class="type">time</span>` <span class="keyword">ROWS</span> <span class="keyword">BETWEEN</span> <span class="keyword">CURRENT</span> <span class="type">ROW</span> <span class="keyword">AND</span> UNBOUNDED FOLLOWING) pv5</span><br><span class="line"><span class="keyword">from</span> wujidata_window;</span><br></pre></td></tr></table></figure></li>
+<li><p>结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">domain        time	 traffic	pv1	pv2	pv3	pv4	pv5</span><br><span class="line">wujidata	2019-04-10	1		1	1	1	6	26</span><br><span class="line">wujidata	2019-04-11	5		6	6	6	13	25</span><br><span class="line">wujidata	2019-04-12	7		13	13	13	16	20</span><br><span class="line">wujidata	2019-04-13	3		16	16	16	18	13</span><br><span class="line">wujidata	2019-04-14	2		18	18	17	21	10</span><br><span class="line">wujidata	2019-04-15	4		22	22	16	20	8</span><br><span class="line">wujidata	2019-04-16	4		26	26	13	13	4</span><br></pre></td></tr></table></figure></li>
+<li><p>分析</p>
+<p>pv1：从头到当前行统计<br>pv2：和pv2一样<br>pv3：从前三行到当前行统计<br>pv4：从前三行到当前行的下一行统计<br>pv5：当前行到下面所有行统计</p>
+<p>边界有五种类型</p>
+<p>UNBOUNDED PRECEDING：从第一行开始<br>UNBOUNDED FOLLOWING：至最后一行结束<br>CURRENT ROW：从当前行或者至当前行<br><value> PRECEDING：从当前行的前几行开始(value是几就是几)<br><value> FOLLOWING：至当前行的后几行结束(value是几就是几)</value></value></p>
+</li>
+</ul>
+<h2><span id="分析函数">分析函数</span></h2><h3><span id="rank-row_number-dense_rank">RANK、ROW_NUMBER、DENSE_RANK</span></h3><ul>
+<li><p>ROW_NUMBER</p>
+<pre><code>从1开始，按照顺序，生成分组内记录的编号
+</code></pre>
+</li>
+<li><p>RANK</p>
+<pre><code>从1开始，按照顺序，生成分组内记录的编号，排序相同会重复，在名次中留下空位
+</code></pre>
+</li>
+<li><p>DENSE_RANK</p>
+<pre><code>从1开始，按照顺序，生成分组内记录的编号，排序相同会重复，在名次中不会留下空位
+</code></pre>
+</li>
+<li><p>测试</p>
+<ul>
+<li><p>数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">gifshow.com,2019-04-10,1</span><br><span class="line">gifshow.com,2019-04-11,5</span><br><span class="line">gifshow.com,2019-04-12,7</span><br><span class="line">gifshow.com,2019-04-13,3</span><br><span class="line">gifshow.com,2019-04-14,2</span><br><span class="line">gifshow.com,2019-04-15,4</span><br><span class="line">gifshow.com,2019-04-16,4</span><br><span class="line">yy.com,2019-04-10,2</span><br><span class="line">yy.com,2019-04-11,3</span><br><span class="line">yy.com,2019-04-12,5</span><br><span class="line">yy.com,2019-04-13,6</span><br><span class="line">yy.com,2019 04-14,3</span><br><span class="line">yy.com,2019-04-15,9</span><br><span class="line">yy.com,2019-04-16,7</span><br></pre></td></tr></table></figure></li>
+<li><p>建表以及加载数据</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> wujidata_traffic(</span><br><span class="line">domain string,</span><br><span class="line">`<span class="type">time</span>` string,</span><br><span class="line">traffic <span class="type">int</span></span><br><span class="line">) <span class="type">row</span> format delimited fields terminated <span class="keyword">by</span> <span class="string">&#x27;,&#x27;</span>;</span><br><span class="line"></span><br><span class="line">load data <span class="keyword">local</span> inpath <span class="string">&#x27;/home/hadoop/data/window/rank.txt&#x27;</span> overwrite <span class="keyword">into</span> <span class="keyword">table</span> wujidata_traffic;</span><br></pre></td></tr></table></figure></li>
+<li><p>SQL语句</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> domain, <span class="type">time</span>, traffic,</span><br><span class="line"><span class="built_in">RANK</span>() <span class="keyword">over</span>(<span class="keyword">partition</span> <span class="keyword">by</span> domain <span class="keyword">order</span> <span class="keyword">by</span> traffic <span class="keyword">desc</span>) rn1,</span><br><span class="line"><span class="built_in">DENSE_RANK</span>() <span class="keyword">over</span>(<span class="keyword">partition</span> <span class="keyword">by</span> domain <span class="keyword">order</span> <span class="keyword">by</span> traffic <span class="keyword">desc</span>) rn2,</span><br><span class="line"><span class="built_in">ROW_NUMBER</span>() <span class="keyword">over</span>(<span class="keyword">partition</span> <span class="keyword">by</span> domain <span class="keyword">order</span> <span class="keyword">by</span> traffic <span class="keyword">desc</span>) rn3</span><br><span class="line"><span class="keyword">from</span> wujidata_traffic;</span><br></pre></td></tr></table></figure></li>
+<li><p>结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">domain			time	traffic	rn1	rn2	rn3</span><br><span class="line">gifshow.com	2019-04-12		7	1	1	1</span><br><span class="line">gifshow.com	2019-04-11		5	2	2	2</span><br><span class="line">gifshow.com	2019-04-16		4	3	3	3</span><br><span class="line">gifshow.com	2019-04-15		4	3	3	4</span><br><span class="line">gifshow.com	2019-04-13		3	5	4	5</span><br><span class="line">gifshow.com	2019-04-14		2	6	5	6</span><br><span class="line">gifshow.com	2019-04-10		1	7	6	7</span><br><span class="line">yy.com		2019-04-15		9	1	1	1</span><br><span class="line">yy.com		2019-04-16		7	2	2	2</span><br><span class="line">yy.com		2019-04-13		6	3	3	3</span><br><span class="line">yy.com		2019-04-12		5	4	4	4</span><br><span class="line">yy.com		2019-04-11		3	5	5	5</span><br><span class="line">yy.com		2019 04-14		3	5	5	6</span><br><span class="line">yy.com		2019-04-10		2	7	6	7</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h3><span id="ntile">NTILE</span></h3><ul>
+<li><p>NTILE：把数据平均分配到指定的N个桶中，如果说不能平均，则优先分配到较小编号的桶中</p>
+</li>
+<li><p>测试</p>
+<ul>
+<li><p>数据同上</p>
+</li>
+<li><p>SQL语句</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> domain, `<span class="type">time</span>`, traffic,</span><br><span class="line"><span class="built_in">NTILE</span>(<span class="number">2</span>) <span class="keyword">over</span>(<span class="keyword">partition</span> <span class="keyword">by</span> domain <span class="keyword">order</span> <span class="keyword">by</span> `<span class="type">time</span>`) rn1,</span><br><span class="line"><span class="built_in">NTILE</span>(<span class="number">3</span>) <span class="keyword">over</span>(<span class="keyword">partition</span> <span class="keyword">by</span> domain <span class="keyword">order</span> <span class="keyword">by</span> `<span class="type">time</span>`) rn2,</span><br><span class="line"><span class="built_in">NTILE</span>(<span class="number">4</span>) <span class="keyword">over</span>(<span class="keyword">order</span> <span class="keyword">by</span> `<span class="type">time</span>`) rn3</span><br><span class="line"><span class="keyword">from</span> wujidata_traffic <span class="keyword">order</span> <span class="keyword">by</span> domain, `<span class="type">time</span>`;</span><br></pre></td></tr></table></figure></li>
+<li><p>结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">domain			time	traffic	rn1	rn2	rn3</span><br><span class="line">gifshow.com	2019-04-10		1	1	1	1</span><br><span class="line">gifshow.com	2019-04-11		5	1	1	1</span><br><span class="line">gifshow.com	2019-04-12		7	1	1	2</span><br><span class="line">gifshow.com	2019-04-13		3	1	2	3</span><br><span class="line">gifshow.com	2019-04-14		2	2	2	3</span><br><span class="line">gifshow.com	2019-04-15		4	2	3	4</span><br><span class="line">gifshow.com	2019-04-16		4	2	3	4</span><br><span class="line">yy.com		2019 04-14		3	1	1	1</span><br><span class="line">yy.com		2019-04-10		2	1	1	1</span><br><span class="line">yy.com		2019-04-11		3	1	1	2</span><br><span class="line">yy.com		2019-04-12		5	1	2	2</span><br><span class="line">yy.com		2019-04-13		6	2	2	2</span><br><span class="line">yy.com		2019-04-15		9	2	3	3</span><br><span class="line">yy.com		2019-04-16		7	2	3	4</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h3><span id="cume_dist-percent_rank">CUME_DIST、PERCENT_RANK</span></h3><ul>
+<li><p>CUME_DIST：<strong>小于等于当前行值的行数 / 分组内的总行数</strong></p>
+<ul>
+<li><p>测试数据：window02.txt</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dept01,wuji,10000</span><br><span class="line">dept01,zhiruo,20000</span><br><span class="line">dept01,bingbing,30000</span><br><span class="line">dept02,zhangsan,40000</span><br><span class="line">dept02,1isi,50000</span><br></pre></td></tr></table></figure></li>
+<li><p>建表语句以及加载数据</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> wujidata_window2(</span><br><span class="line">dept string,</span><br><span class="line">`<span class="keyword">user</span>` string,</span><br><span class="line">sal <span class="type">int</span></span><br><span class="line">) <span class="type">row</span> format delimited fields terminated <span class="keyword">by</span> <span class="string">&#x27;,&#x27;</span>;</span><br><span class="line"></span><br><span class="line">load data <span class="keyword">local</span> inpath <span class="string">&#x27;/home/hadoop/data/window/window02.txt&#x27;</span> overwrite <span class="keyword">into</span> <span class="keyword">table</span> wujidata_window2;</span><br></pre></td></tr></table></figure></li>
+<li><p>SQL语句(CUME_DIST)</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> dept, <span class="keyword">user</span>, sal,</span><br><span class="line"><span class="built_in">CUME_DIST</span>() <span class="keyword">over</span>(<span class="keyword">order</span> <span class="keyword">by</span> sal) rn1,</span><br><span class="line"><span class="built_in">CUME_DIST</span>() <span class="keyword">over</span>(<span class="keyword">partition</span> <span class="keyword">by</span> dept <span class="keyword">order</span> <span class="keyword">by</span> sal) rn2</span><br><span class="line"><span class="keyword">from</span> wujidata_window2;</span><br></pre></td></tr></table></figure></li>
+<li><p>结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">dept	user		sal		rn1	rn2</span><br><span class="line">dept01	wuji		10000	0.2	0.3333333333333333</span><br><span class="line">dept01	zhiruo		20000	0.4	0.6666666666666666</span><br><span class="line">dept01	bingbing	30000	0.6	1.0</span><br><span class="line">dept02	zhangsan	40000	0.8	0.5</span><br><span class="line">dept02	1isi		50000	1.0	1.0</span><br></pre></td></tr></table></figure></li>
+<li><p>分析</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">rn1：所有数据一组，总行数为5</span><br><span class="line">	&lt;&#x3D; 10000 的有一行，1&#x2F;5 &#x3D; 0.2</span><br><span class="line">	&lt;&#x3D; 20000 的有两行，2&#x2F;5 &#x3D; 0.4</span><br><span class="line">	&lt;&#x3D; 30000 的有三行，3&#x2F;5 &#x3D; 0.6</span><br><span class="line">	&lt;&#x3D; 40000 的有四行，4&#x2F;5 &#x3D; 0.8</span><br><span class="line">	&lt;&#x3D; 50000 的有五行，5&#x2F;5 &#x3D; 1.0</span><br><span class="line">	</span><br><span class="line">rn2：按dept分组，dept01的总行数：3; dept02的总行数：2</span><br><span class="line">	dept01</span><br><span class="line">		&lt;&#x3D; 10000 的有一行，1&#x2F;3 &#x3D; 0.3333333333333333</span><br><span class="line">		&lt;&#x3D; 20000 的有两行，2&#x2F;3 &#x3D; 0.6666666666666666</span><br><span class="line">		&lt;&#x3D; 30000 的有三行，3&#x2F;3 &#x3D; 1.0</span><br><span class="line">	dept02</span><br><span class="line">		&lt;&#x3D; 40000 的有一行，1&#x2F;2 &#x3D; 0.5</span><br><span class="line">		&lt;&#x3D; 50000 的有两行，2&#x2F;2 &#x3D; 1.0</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>PERCENT_RANK：<strong>分组内当前行的rank-1 / 分组内总行数-1</strong></p>
+<ul>
+<li><p>SQL语句(PERCENT_RANK)</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> dept, `<span class="keyword">user</span>`, sal,</span><br><span class="line"><span class="built_in">PERCENT_RANK</span>() <span class="keyword">over</span>(<span class="keyword">order</span> <span class="keyword">by</span> sal) rn1,</span><br><span class="line"><span class="built_in">rank</span>() <span class="keyword">over</span>(<span class="keyword">order</span> <span class="keyword">by</span> sal) rn11,</span><br><span class="line"><span class="built_in">PERCENT_RANK</span>() <span class="keyword">over</span>(<span class="keyword">partition</span> <span class="keyword">by</span> dept <span class="keyword">order</span> <span class="keyword">by</span> sal) rn2,</span><br><span class="line"><span class="built_in">rank</span>() <span class="keyword">over</span>(<span class="keyword">partition</span> <span class="keyword">by</span> dept <span class="keyword">order</span> <span class="keyword">by</span> sal) rn22</span><br><span class="line"><span class="keyword">from</span> wujidata_window2;</span><br></pre></td></tr></table></figure></li>
+<li><p>结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">dept    user    		sal     rn1     rn11    rn2     rn22</span><br><span class="line">dept01  wuji    		10000   0.0     1       0.0     1</span><br><span class="line">dept01  zhiruo  		20000   0.25    2       0.5     2</span><br><span class="line">dept01  bingbing        30000   0.5     3       1.0     3</span><br><span class="line">dept02  zhangsan        40000   0.75    4       0.0     1</span><br><span class="line">dept02  1isi    		50000   1.0     5       1.0     2</span><br></pre></td></tr></table></figure></li>
+<li><p>分析</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">rn1</span><br><span class="line">	0.0 (1-1&#x2F;5-1)</span><br><span class="line">    0.25(2-1&#x2F;5-1)</span><br><span class="line">    0.5 (3-1&#x2F;5-1)</span><br><span class="line">    0.75(4-1&#x2F;5-1)</span><br><span class="line">    1.0	(5-1&#x2F;5-1)</span><br><span class="line">	</span><br><span class="line">rn2</span><br><span class="line">	0.0(1-1&#x2F;3-1)</span><br><span class="line">	0.5(2-1&#x2F;3-1)</span><br><span class="line">	1.0(3-1&#x2F;3-1)</span><br><span class="line">	0.0(1-1&#x2F;2-1)</span><br><span class="line">	1.0(2-1&#x2F;2-1)</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
 
     
 
@@ -490,16 +527,16 @@
     </li>
     <li>
       <strong>本文链接: </strong>
-      <a href="https://liyaya0201.github.io/2019/01/18/SparkCore多目录输出&amp;累加器&amp;持久化&amp;广播变量/" title="SparkCore多目录输出&amp;累加器&amp;持久化&amp;广播变量" target="_blank">https://liyaya0201.github.io/2019/01/18/SparkCore多目录输出&amp;累加器&amp;持久化&amp;广播变量/</a>
+      <a href="https://liyaya0201.github.io/2019/08/24/Hive窗口函数/" title="Hive窗口函数" target="_blank">https://liyaya0201.github.io/2019/08/24/Hive窗口函数/</a>
     </li>
 
     <li>
       <strong>发布时间: </strong>
-      2019年01月18日
+      2019年08月24日
     </li>
     <li>
       <strong>最后更新: </strong>
-      2019年01月18日
+      2019年08月24日
     </li>
 
     
@@ -535,7 +572,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Spark</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Hive</a>
         		</li>
       		
 		</ul>
@@ -547,7 +584,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/Spark//" class="article-tag-list-link color1">Spark</a>
+        			<a href="/categories/Hive//" class="article-tag-list-link color5">Hive</a>
         		</li>
       		
 		</ul>
@@ -602,7 +639,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://liyaya0201.github.io/2019/01/18/SparkCore%E5%A4%9A%E7%9B%AE%E5%BD%95%E8%BE%93%E5%87%BA&%E7%B4%AF%E5%8A%A0%E5%99%A8&%E6%8C%81%E4%B9%85%E5%8C%96&%E5%B9%BF%E6%92%AD%E5%8F%98%E9%87%8F/" alt="微信分享二维码"> -->
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://liyaya0201.github.io/2019/08/24/Hive%E7%AA%97%E5%8F%A3%E5%87%BD%E6%95%B0/" alt="微信分享二维码"> -->
     </div>
 </div>
 
@@ -617,18 +654,18 @@
 
 <nav id="article-nav">
   
-    <a href="/2019/01/22/SparkSQL%E5%88%9D%E8%AF%86/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2019/09/25/spark.yarn.jars%20&&%20spark.yarn.archive/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          SparkSQL初识
+          spark.yarn.jars &amp; spark.yarn.archive
         
       </div>
     </a>
   
   
-    <a href="/2019/01/16/RDD%E4%B8%AD%E7%9A%84%E7%AA%84%E4%BE%9D%E8%B5%96&%E5%AE%BD%E4%BE%9D%E8%B5%96/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">RDD中的窄依赖&amp;宽依赖</div>
+    <a href="/2019/08/16/Flume%E7%9A%84Sink%E9%80%89%E6%8B%A9%E5%99%A8/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Flume的Sink选择器</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -655,7 +692,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">多目录输出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">计数器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.1.</span> <span class="toc-text">为什么要定义计数器？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.2.</span> <span class="toc-text">图解计数器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.3.</span> <span class="toc-text">LongAccumulator</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.4.</span> <span class="toc-text">CollectionAccumulator</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">持久化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">3.1.</span> <span class="toc-text">如何选择它们？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-number">3.1.1.</span> <span class="toc-text">cache和persist有什么区别？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-number">3.1.2.</span> <span class="toc-text">序列化和非序列化有什么区别？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-number">3.1.3.</span> <span class="toc-text">SparkCore中的cache和SparkSQL中的cache有什么区别？</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">广播变量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">4.1.</span> <span class="toc-text">为什么要将变量定义成广播变量？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">4.2.</span> <span class="toc-text">广播变量图解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">4.3.</span> <span class="toc-text">小表广播案例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">4.4.</span> <span class="toc-text">为什么只能 broadcast 只读的变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">4.5.</span> <span class="toc-text">注意事项</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">什么是窗口函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">窗口函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.1.</span> <span class="toc-text">LAG&#x2F;LEAD</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.2.</span> <span class="toc-text">FIRST_VALUE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.3.</span> <span class="toc-text">LAST_VALUE</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">over子句</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">分析函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">4.1.</span> <span class="toc-text">RANK、ROW_NUMBER、DENSE_RANK</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">4.2.</span> <span class="toc-text">NTILE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">4.3.</span> <span class="toc-text">CUME_DIST、PERCENT_RANK</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
